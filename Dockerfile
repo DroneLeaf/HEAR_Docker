@@ -222,26 +222,26 @@ RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 RUN sysctl -w kernel.msgmax=65536
 
 
-
-# RUN apt-get -y update && apt-get install -y
-# RUN apt-get install ninja-build
-# RUN /bin/bash -c ' cd /root/vcpkg; ./bootstrap-vcpkg.sh -useSystemBinaries'
-# RUN /bin/bash -c ' cd /root/vcpkg; VCPKG_FORCE_SYSTEM_BINARIES=1 ./vcpkg install cpr'
 # TODO : make vcpkg install at root folder not opt folder
 COPY --from=vcpkg_img opt/vcpkg /root/vcpkg
 
 RUN mkdir /HEAR_FC
 WORKDIR /HEAR_FC
-ADD .. /HEAR_FC
-#ADD src HEAR_FC
-#ADD mavros_msgs HEAR_FC
-#RUN cp  -r /HEAR_FC/src /HEAR_FC/src2
-#COPY src /HEAR_FC
-#COPY mavros_msgs /HEAR_FC
-#RUN cmake -B/build -S . -D CMAKE_BUILD_TYPE=Release
-#RUN cmake --build /build
-#RUN  cd HEAR_FC && . /opt/ros/noetic/setup.bash catkin_make HEAR_FC
+ADD /mavros_msgs /HEAR_FC/mavros_msgs
 
+# setup git credentials
+RUN git config --global user.name "docker image"
+ARG GITHUB_ID
+ARG GITHUB_TOKEN
+RUN git config \
+    --global \
+    url."https://${GITHUB_ID}:${GITHUB_TOKEN}@github.com/".insteadOf \
+    "https://github.com/"
+
+RUN mkdir -p /HEAR_FC/src
+
+RUN cd /HEAR_FC/src  &&  git clone -b refactor_templates_no_ros https://github.com/HazemElrefaei/HEAR_FC.git
+RUN cd /HEAR_FC/src/HEAR_FC && git submodule update --init --recursive
 
 
 RUN /bin/bash -c 'source /opt/ros/noetic/setup.bash'
@@ -249,19 +249,11 @@ RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /HEAR_FC; catkin_make clean'
 
 RUN bash -c "cd /HEAR_FC &&cp -r /HEAR_FC/mavros_msgs /HEAR_FC/devel/include"
 RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /HEAR_FC; catkin_make clean'
-#COPY mavros_msgs /HEAR_FC/devel/include
-RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /HEAR_FC; catkin_make -DCMAKE_BUILD_TYPE=Debug -Wno-dev'
+RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /HEAR_FC; catkin_make -DCMAKE_BUILD_TYPE=Debug  D -Wno-dev'
 
-
-#RUN cd /HEAR_FC && source devel/setup.bash && roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV
-# Launch built application
-#CMD ["./receiver"]
 RUN /bin/bash -c "cd /HEAR_FC && source /HEAR_FC/devel/setup.bash"
-#WORKDIR /opt/ros
 ADD entrypoint.sh /
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
-#ENTRYPOINT [ "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV" ]
-#ENTRYPOINT ["cd /opt ;source /ros/noetic/setup.bash"]
-#CMD ["roslaunch","flight_controller flight_controller.launch DRONE_NAME:=UAV"]
+
