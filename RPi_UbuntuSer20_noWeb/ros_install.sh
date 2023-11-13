@@ -6,16 +6,18 @@ echo "╩╚═╚═╝╚═╝  ╩┘└┘└─┘ ┴ ┴ ┴┴─┘┴
 
 ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /etc/timezone
 
-apt update && apt install -y
+apt-get update && apt-get install -y gnupg
+apt-get upgrade -y
 
+apt-get install  -y lsb-release
 
-apt install  -y lsb-release
 
 sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-apt install curl 
+apt-get install curl  -y
 
-curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-apt update
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc |  apt-key add -
+apt-get update -y
+
 apt install ros-noetic-desktop-full  -y
 source /opt/ros/noetic/setup.bash
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
