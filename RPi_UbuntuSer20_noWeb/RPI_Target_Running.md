@@ -16,7 +16,7 @@ docker build \
 --progress=plain \
 --build-arg GITHUB_ID="ID_HERE" \
 --build-arg GITHUB_TOKEN="TOKEN_HERE" \
--t fc_ARM64 \
+-t fc_arm64 \
 .
 
 ```
@@ -24,17 +24,17 @@ docker build \
 - ### How To Run The Docker Image
 
 ```bash 
-docker run -t -d fc_ARM64
+docker run -t -d fc_arm64
 ```
 
 
 - ### how To Copy compiled files to host machine
-1. Get ```"CONTAINER ID"``` of ```'fc_ARM64'``` image
+1. Get ```"CONTAINER ID"``` of ```'fc_arm64'``` image
 ```bash 
-docker container ls  | grep 'fc_ARM64' | awk '{print $1}'
+docker container ls  | grep 'fc_arm64' | awk '{print $1}'
 ```
 
-2. copy ```"CONTAINER ID"``` of ```'fc_ARM64'``` image from the bash output
+2. copy ```"CONTAINER ID"``` of ```'fc_arm64'``` image from the bash output
 
 3. Run this Bash CMD with ```"CONTAINER ID"``` you copied
 ```bash
