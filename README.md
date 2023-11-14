@@ -68,6 +68,8 @@ docker build \
 --progress=plain \
 --build-arg GITHUB_ID="ID_HERE" \
 --build-arg GITHUB_TOKEN="TOKEN_HERE" \
+--build-arg TARGET_RPI="OFF" \
+--build-arg TARGET_UBUNTU="ON" \
 -t fc \
 .
 
