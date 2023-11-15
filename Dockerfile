@@ -225,10 +225,9 @@ RUN sysctl -w kernel.msgmax=65536
 # TODO : make vcpkg install at root folder not opt folder
 COPY --from=vcpkg_img opt/vcpkg /root/vcpkg
 
-RUN mkdir /HEAR_FC
-WORKDIR /HEAR_FC
-ADD /mavros_msgs /HEAR_FC/mavros_msgs
-
+RUN mkdir -p /home/pi/HEAR_FC
+WORKDIR /home/pi/HEAR_FC
+ADD /mavros_msgs /home/pi/HEAR_FC/mavros_msgs
 # setup git credentials
 RUN git config --global user.name "docker image"
 ARG GITHUB_ID
@@ -238,20 +237,21 @@ RUN git config \
     url."https://${GITHUB_ID}:${GITHUB_TOKEN}@github.com/".insteadOf \
     "https://github.com/"
 
-RUN mkdir -p /HEAR_FC/src
 
-RUN cd /HEAR_FC/src  &&  git clone -b refactor_templates_no_ros https://github.com/HazemElrefaei/HEAR_FC.git
-RUN cd /HEAR_FC/src/HEAR_FC && git submodule update --init --recursive
+RUN mkdir -p /home/pi/HEAR_FC/src
+
+RUN cd /home/pi/HEAR_FC/src  &&  git clone -b devel https://github.com/HazemElrefaei/HEAR_FC.git
+RUN cd /home/pi/HEAR_FC/src/HEAR_FC && git submodule update --init --recursive
 
 
 RUN /bin/bash -c 'source /opt/ros/noetic/setup.bash'
-RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /HEAR_FC; catkin_make clean'
+RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /home/pi/HEAR_FC; catkin_make clean'
 
-RUN bash -c "cd /HEAR_FC &&cp -r /HEAR_FC/mavros_msgs /HEAR_FC/devel/include"
-RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /HEAR_FC; catkin_make clean'
-RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /HEAR_FC; catkin_make -DCMAKE_BUILD_TYPE=Debug  -Wno-dev'
+RUN bash -c "cd /home/pi/HEAR_FC &&cp -r /home/pi/HEAR_FC/mavros_msgs /home/pi/HEAR_FC/devel/include"
+RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /home/pi/HEAR_FC; catkin_make clean'
+RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /home/pi/HEAR_FC; catkin_make -DCMAKE_BUILD_TYPE=Debug  -Wno-dev'
 
-RUN /bin/bash -c "cd /HEAR_FC && source /HEAR_FC/devel/setup.bash"
+RUN /bin/bash -c "cd /home/pi/HEAR_FC && source /home/pi/HEAR_FC/devel/setup.bash"
 ADD entrypoint.sh /
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh

@@ -83,6 +83,13 @@ docker run -t -d fc
 <br>
 
  <a id="Targets"></a>
+
+- ### Trick To Re-Run Part of the Docker Build Process
+Lets say you want to pull latest changes from GitHub and rebuild. Docker automaticaly recognizes changes to the DockerFile and re-run the introduced command and the following ones. So you may add a command that does nothing like changing directory to the current directory just before github clone command:
+```
+RUN cd .
+```
+
 # Targets
 
 * RPi_UbuntuSer20_noWeb
