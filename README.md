@@ -88,6 +88,13 @@ docker run -it -d fc "/home/pi/HEAR_FC"  " roslaunch flight_controller flight_co
 <br>
 
  <a id="Targets"></a>
+
+- ### Trick To Re-Run Part of the Docker Build Process
+Lets say you want to pull latest changes from GitHub and rebuild. Docker automaticaly recognizes changes to the DockerFile and re-run the introduced command and the following ones. So you may add a command that does nothing like changing directory to the current directory just before github clone command:
+```
+RUN cd .
+```
+
 # Targets
 
 * RPi_UbuntuSer20_noWeb

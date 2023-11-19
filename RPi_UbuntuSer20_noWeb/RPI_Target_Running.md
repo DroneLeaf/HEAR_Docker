@@ -44,7 +44,7 @@ docker container ls  | grep 'fc_arm64' | awk '{print $1}'
 
 3. Run this Bash CMD with ```"CONTAINER ID"``` you copied
 ```bash
-docker cp {CONTAINER ID}:/HEAR_FC /compiled_files
+docker cp {CONTAINER ID}:/home/pi/HEAR_FC /compiled_files
 
 # EX: docker cp 7a349451cdc9:/HEAR_FC /compiled_files
 ```
