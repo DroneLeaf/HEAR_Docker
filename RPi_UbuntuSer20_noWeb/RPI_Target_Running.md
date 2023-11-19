@@ -18,6 +18,10 @@ docker build \
 --build-arg GITHUB_TOKEN="TOKEN_HERE" \
 --build-arg TARGET_RPI="ON" \
 --build-arg TARGET_UBUNTU="OFF" \
+--build-arg opencv_url="base" \
+--build-arg USERNAME="pi" \
+--build-arg WS_NAME="HEAR_FC" \
+
 -t fc_arm64 \
 .
 
@@ -26,7 +30,7 @@ docker build \
 - ### How To Run The Docker Image
 
 ```bash 
-docker run -t -d fc_arm64
+docker run -it -d fc_arm64 "/home/pi/HEAR_FC"  " roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
 ```
 
 

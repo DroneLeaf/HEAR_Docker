@@ -70,6 +70,9 @@ docker build \
 --build-arg GITHUB_TOKEN="TOKEN_HERE" \
 --build-arg TARGET_RPI="OFF" \
 --build-arg TARGET_UBUNTU="ON" \
+--build-arg opencv_url="cyrilix/opencv-runtime:4.8.0" \
+--build-arg USERNAME="pi" \
+--build-arg WS_NAME="HEAR_FC" \
 -t fc \
 .
 
@@ -78,7 +81,7 @@ docker build \
 - ### How To Run The Docker Image
 
 ```bash 
-docker run -t -d fc
+docker run -it -d fc "/home/pi/HEAR_FC"  " roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
 ```
 ---
 

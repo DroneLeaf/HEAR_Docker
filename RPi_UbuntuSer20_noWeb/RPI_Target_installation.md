@@ -7,6 +7,7 @@
 - vcpkg_install.sh
 - opencv_install.sh
 - ros_install.sh
+- dependencies_install.sh
 
 #### All these files will be excuted from a single sh file `full_system_installation.sh`
 

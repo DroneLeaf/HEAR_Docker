@@ -13,6 +13,7 @@ chmod +x cmake_install.sh
 chmod +x vcpkg_install.sh
 chmod +x opencv_install.sh
 chmod +x ros_install.sh
+chmod +x dependencies_install.sh
 
 ./base.sh
 ./cmake_install.sh aarch64
@@ -20,3 +21,4 @@ chmod +x ros_install.sh
 ./vcpkg_install.sh
 ./opencv_install.sh
 ./ros_install.sh
+./dependencies_install.sh
