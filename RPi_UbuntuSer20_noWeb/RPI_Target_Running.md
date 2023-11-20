@@ -54,3 +54,28 @@ docker cp {CONTAINER ID}:/home/pi/HEAR_FC /compiled_files
 > fell free to use the so libraries inside ```/compiled_files/devel/lib``` folder
 
 
+# Upload hear_fc devel to AWS S3
+
+```bash
+# install needed packages
+pip3 install boto3
+apt install zip
+
+# go to project root
+cd ~/HEAR_Docker
+
+# zip desired folder
+zip -r hear_fc_devel.zip /compiled_files/devel
+
+# upload zipped file
+python3 s3Upload.py
+
+
+```
+- Download file on other machine
+
+```bash
+wget https://hear-bucket.s3.me-south-1.amazonaws.com/hear_arch/hear_fc_devel.zip 
+
+unzip hear_fc_devel.zip
+```
