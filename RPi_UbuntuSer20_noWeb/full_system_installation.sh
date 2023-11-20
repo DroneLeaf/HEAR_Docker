@@ -22,3 +22,4 @@ chmod +x dependencies_install.sh
 ./opencv_install.sh
 ./ros_install.sh
 ./dependencies_install.sh
+./mavros_install.sh

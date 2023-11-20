@@ -37,16 +37,16 @@ docker run -it -d fc_arm64 "/home/pi/HEAR_FC"  " roslaunch flight_controller fli
 - ### how To Copy compiled files to host machine
 1. Get ```"CONTAINER ID"``` of ```'fc_arm64'``` image
 ```bash 
-docker container ls  | grep 'fc_arm64' | awk '{print $1}'
+docker ps -a  | grep 'fc_arm64' | awk '{print $1}'
 ```
 
 2. copy ```"CONTAINER ID"``` of ```'fc_arm64'``` image from the bash output
 
 3. Run this Bash CMD with ```"CONTAINER ID"``` you copied
 ```bash
-docker cp {CONTAINER ID}:/home/pi/HEAR_FC /compiled_files
+sudo docker cp {CONTAINER ID}:/home/pi/HEAR_FC compiled_files
 
-# EX: docker cp 7a349451cdc9:/HEAR_FC /compiled_files
+# EX: docker cp 7a349451cdc9:/home/pi/HEAR_FC compiled_files
 ```
 
 4. Now you can find copied docker image output here >>> ```/compiled_files```
@@ -65,7 +65,7 @@ apt install zip
 cd ~/HEAR_Docker
 
 # zip desired folder
-zip -r hear_fc_devel.zip /compiled_files/devel
+sudo zip -r  hear_fc_devel.zip ./compiled_files
 
 # upload zipped file
 python3 s3Upload.py
@@ -77,5 +77,20 @@ python3 s3Upload.py
 ```bash
 wget https://hear-bucket.s3.me-south-1.amazonaws.com/hear_arch/hear_fc_devel.zip 
 
-unzip hear_fc_devel.zip
+unzip hear_fc_devel.zip -d compiled_files
+cp -r  compiled_files/compiled_files ~/HEAR_FC
 ```
+
+# Transfer via ssh to raspberry pi
+
+```bash
+# zip desired folder
+sudo zip -r  hear_fc_devel.zip ./compiled_files
+
+sudo scp hear_fc_devel.zip pi@{ip}:/home/pi/hear_fc_devel.zip
+
+unzip hear_fc_devel.zip -d compiled_files
+cp -r  compiled_files/compiled_files ~/HEAR_FC
+
+```
+
