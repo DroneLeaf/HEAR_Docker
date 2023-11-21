@@ -83,14 +83,24 @@ cp -r  compiled_files/compiled_files ~/HEAR_FC
 
 # Transfer via ssh to raspberry pi
 
+- On local Machine
+
 ```bash
 # zip desired folder
 sudo zip -r  hear_fc_devel.zip ./compiled_files
 
+# copy to raspberry pi device
 sudo scp hear_fc_devel.zip pi@{ip}:/home/pi/hear_fc_devel.zip
 
-unzip hear_fc_devel.zip -d compiled_files
-cp -r  compiled_files/compiled_files ~/HEAR_FC
 
 ```
 
+- On Raspberry Pi
+
+``` bash
+
+unzip hear_fc_devel.zip -d compiled_files
+
+cp -r  compiled_files/compiled_files ~/HEAR_FC
+
+```
