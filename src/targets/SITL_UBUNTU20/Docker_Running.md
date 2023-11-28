@@ -17,13 +17,12 @@ docker build \
 --progress=plain \
 --build-arg GITHUB_ID="{ID_HERE}" \
 --build-arg GITHUB_TOKEN="{TOKEN_HERE}" \
---build-arg TARGET_RPI="OFF" \
 --build-arg TARGET_UBUNTU="ON" \
 --build-arg opencv_url="cyrilix/opencv-runtime:4.8.0" \
 --build-arg USERNAME="{username}" \
 --build-arg WS_NAME="HEAR_FC" \
 
--t fc_amd64 \
+-t fc_sitl \
 .
 
 ```
@@ -31,17 +30,17 @@ docker build \
 - ### How To Run The Docker Image
 
 ```bash 
-docker run -it -d fc_amd64 "/home/{username}/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
+docker run -it -d fc_sitl "/home/{username}/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
 ```
 
 
 - ### how To Copy compiled files to host machine
-1. Get ```"CONTAINER ID"``` of ```'fc_amd64'``` image
+1. Get ```"CONTAINER ID"``` of ```'fc_sitl'``` image
 ```bash 
-docker ps -a  | grep 'fc_amd64' | awk '{print $1}'
+docker ps -a  | grep 'fc_sitl' | awk '{print $1}'
 ```
 
-2. copy ```"CONTAINER ID"``` of ```'fc_amd64'``` image from the bash output
+2. copy ```"CONTAINER ID"``` of ```'fc_sitl'``` image from the bash output
 
 3. Run this Bash CMD with ```"CONTAINER ID"``` you copied
 ```bash
