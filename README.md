@@ -1,6 +1,35 @@
 # HEAR Docker Getting Started Guide
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    #background-color: #f0f0f0;
+    #color: #333;
+  }
 
+  h1 {
+    color: #008080;
+  }
 
+  p {
+    margin-bottom: 20px;
+  }
+</style>
+
+<div>
+<html>
+<head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+</body>
+</html>
+</div>
+<script>
+  // Your JavaScript code goes here
+  document.addEventListener('DOMContentLoaded', function() {
+    alert('Hello, Drone Leafers!');
+  });
+</script>
 
 # **Good To Know**
 
