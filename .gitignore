@@ -1,4 +1,8 @@
 compiled_files
 Dockerfile copy
-RPi_UbuntuSer20_noWeb/Dockerfile
+src/targets/RPI_UBUNTU20/Dockerfile
+src/targets/ORIN_UBUNTU20/Dockerfile
+src/targets/SITL_UBUNTU20/Dockerfile
 hear_fc_devel.zip
+commands.sh
+directory-structure.md

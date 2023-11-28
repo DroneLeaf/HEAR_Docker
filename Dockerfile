@@ -1,6 +1,6 @@
 #ARM64
 
-ARG opencv_url
+ARG opencv_url=base
 
 FROM ubuntu:20.04 AS base
 LABEL org.opencontainers.image.title="crosscompiling system" 
@@ -19,26 +19,19 @@ ARG CMAKETtarget
 ARG GITHUB_ID
 ARG GITHUB_TOKEN
 
-ARG TARGET_RPI
-ARG TARGET_UBUNTU
+ARG TARGET_RPI=OFF
+ARG TARGET_UBUNTU=OFF
+ARG TARGET_ORIN=OFF
+
 
 #USER root
 
-# RUN chmod +x scripts/base.sh
-# RUN chmod +x scripts/cmake_install.sh
-# RUN chmod +x scripts/vcpkg_install.sh
-# RUN chmod +x scripts/opencv_install.sh
-# RUN chmod +x scripts/ros_install.sh
-# RUN chmod +x scripts/mavros_install.sh
-# RUN chmod +x scripts/mavlink_install.sh
-# RUN chmod +x scripts/dependencies_install.sh
-# RUN chmod +x scripts/hear_fc_install.sh
-ADD /RPi_UbuntuSer20_noWeb/base.sh /scripts/base.sh
+ADD /src/common/scripts/base.sh /scripts/base.sh
 RUN chmod +x scripts/base.sh
 RUN ./scripts/base.sh
 
 # cmake
-ADD /RPi_UbuntuSer20_noWeb/cmake_install.sh /scripts/cmake_install.sh
+ADD /src/common/scripts/cmake_install.sh /scripts/cmake_install.sh
 RUN chmod +x scripts/cmake_install.sh
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then\
     ARCHITECTURE=amd64 && CMAKETtarget=x86_64 ;\
@@ -59,7 +52,7 @@ ENV TZ=Europe/London
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
-ADD /RPi_UbuntuSer20_noWeb/vcpkg_install.sh /scripts/vcpkg_install.sh
+ADD /src/common/scripts/vcpkg_install.sh /scripts/vcpkg_install.sh
 RUN chmod +x scripts/vcpkg_install.sh
 RUN if [ "$TARGET_UBUNTU" = "ON" ]; then\
     ./scripts/vcpkg_install.sh; \
@@ -84,22 +77,41 @@ RUN echo dpkg -L opencv
 COPY --from=opencv_base usr/local  usr/local
 
 #install ros and it's dependencies
-ADD /RPi_UbuntuSer20_noWeb/ros_install.sh /scripts/ros_install.sh
+ADD /src/common/scripts/ros_install.sh /scripts/ros_install.sh
 RUN chmod +x scripts/ros_install.sh
 RUN ./scripts/ros_install.sh
 
-ADD /RPi_UbuntuSer20_noWeb/dependencies_install.sh /scripts/dependencies_install.sh
+ADD /src/common/scripts/dependencies_install.sh /scripts/dependencies_install.sh
 RUN chmod +x scripts/dependencies_install.sh
 RUN ./scripts/dependencies_install.sh
 
-ADD /RPi_UbuntuSer20_noWeb/mavros_install.sh /scripts/mavros_install.sh
+ADD /src/common/scripts/px4/mavros_install.sh /scripts/mavros_install.sh
 RUN chmod +x scripts/mavros_install.sh
 RUN ./scripts/mavros_install.sh
 
 
-ADD /RPi_UbuntuSer20_noWeb/mavlink_install.sh /scripts/mavlink_install.sh
+ADD /src/common/scripts/px4/mavlink_install.sh /scripts/mavlink_install.sh
 RUN chmod +x scripts/mavlink_install.sh
 RUN ./scripts/mavlink_install.sh
+
+
+### All Sections variance here
+#################################################
+# ORIN_UBUNTU20 Section Start
+
+# #### add and expose sh files
+ADD /src/common/scripts/Qgroundcontrol_install.sh /scripts/Qgroundcontrol_install.sh
+RUN chmod +x scripts/Qgroundcontrol_install.sh
+
+# #### target condition excute
+RUN if [ "$TARGET_ORIN" = "ON" ]; then\
+     # run your sh file here 👇👇
+    ./scripts/Qgroundcontrol_install.sh; \
+    #
+  fi;
+
+
+#################################################
 
 
 ARG USERNAME
@@ -133,16 +145,20 @@ RUN git config \
 # RUN cd /HEAR_FC/src  &&  git clone -b devel https://github.com/HazemElrefaei/HEAR_FC.git HEAR_FC
 # RUN cd /HEAR_FC/src/HEAR_FC && git submodule update --init --recursive
 
-ARG TARGET_RPI
-ARG TARGET_UBUNTU
+# ARG TARGET_RPI
+# ARG TARGET_UBUNTU
+
+RUN echo "$TARGET_ORIN TARGET_ORIN2 sadsadsaadl kdjsadj sadjasl"
+RUN echo "$TARGET_UBUNTU TARGET_UBUNTU2 sadsadsaadl kdjsadj sadjasl"
+RUN echo "$TARGET_RPI TARGET_RPI2 sadsadsaadl kdjsadj sadjasl"
 
 RUN mkdir -p /home/$USERNAME/scripts
 
 RUN touch /home/$USERNAME/.bashrc
 
-ADD /RPi_UbuntuSer20_noWeb/hear_fc_install.sh /home/$USERNAME/scripts/hear_fc_install.sh
+ADD /src/common/scripts/hear_arch/hear_fc_install.sh /home/$USERNAME/scripts/hear_fc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_fc_install.sh
-RUN cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU /home/$USERNAME/$WS_NAME $USERNAME
+RUN cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME
 
 # RUN bash -c "source /opt/ros/noetic/setup.bash"
 # RUN bash -c "echo "source /opt/ros/noetic/setup.bash" >> /home/$USERNAME/.bashrc"
@@ -152,7 +168,7 @@ RUN cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNT
 # RUN bash -c "echo "source /home/$USERNAME/$WS_NAME/devel/setup.bash" >> /home/$USERNAME/.bashrc"
 # RUN bash -c "source /home/$USERNAME/.bashrc"
 
-ADD entrypoint.sh /
+ADD /src/core/docker/entrypoint.sh /
 #COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
