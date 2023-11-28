@@ -10,7 +10,7 @@ In Other way , this file will install ros, cmake, vcpkg and other dependencies o
 
 * **Local Machine** : It means Your local PC or Laptop.
 
-* **Cross-Compilation** : To build on one platform a binary that will run on another platform ,in other mean , you want to build HEAR_FC on your local machine and excute generated code on raspberry pi or orin.
+* **Cross-Compilation** : To build on one platform a binary that will run on another platform ,in other mean , you want to build HEAR_FC on your local machine and execute generated code on raspberry pi or orin.
 
 ### ℹ️ℹ️ Hints and Tips 
 * The Main Dockerfile in repo root is suitable for all Targets and no need to declare a Dockerfile for every target.
