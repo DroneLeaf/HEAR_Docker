@@ -18,7 +18,8 @@ docker build \
 --build-arg GITHUB_ID="{ID_HERE}" \
 --build-arg GITHUB_TOKEN="{TOKEN_HERE}" \
 --build-arg TARGET_ORIN="ON" \
---build-arg USERNAME="pi" \
+--build-arg opencv_url="cyrilix/opencv-runtime:4.8.0" \
+--build-arg USERNAME="{username}" \
 --build-arg WS_NAME="HEAR_FC" \
 
 -t fc_orin \
@@ -29,7 +30,7 @@ docker build \
 - ### How To Run The Docker Image
 
 ```bash 
-docker run -it -d fc_orin "/home/pi/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
+docker run -it -d fc_orin "/home/{username}/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
 ```
 
 
@@ -43,9 +44,9 @@ docker ps -a  | grep 'fc_orin' | awk '{print $1}'
 
 3. Run this Bash CMD with ```"CONTAINER ID"``` you copied
 ```bash
-sudo docker cp {CONTAINER ID}:/home/pi/HEAR_FC src/targets/ORIN_UBUNTU20/compiled_files
+sudo docker cp {CONTAINER ID}:/home/{username}/HEAR_FC src/targets/ORIN_UBUNTU20/compiled_files
 
-# EX: docker cp 7a349451cdc9:/home/pi/HEAR_FC src/targets/ORIN_UBUNTU20/compiled_files
+# EX: docker cp 7a349451cdc9:/home/{username}/HEAR_FC src/targets/ORIN_UBUNTU20/compiled_files
 
 # close and remove fc_orin image to save machine resources
 sudo docker rm -f {CONTAINER ID}
@@ -99,7 +100,7 @@ cp -r  compiled_files/compiled_files ~/HEAR_FC
 pushd src/targets/ORIN_UBUNTU20; sudo zip -r ../../../hear_fc_devel.zip ./compiled_files; popd
 
 # copy to raspberry pi device
-sudo scp hear_fc_devel.zip pi@{ip}:/home/pi/hear_fc_devel.zip
+sudo scp hear_fc_devel.zip pi@{ip}:/home/{username}/hear_fc_devel.zip
 
 
 ```
