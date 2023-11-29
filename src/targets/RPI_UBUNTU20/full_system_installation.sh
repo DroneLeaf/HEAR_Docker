@@ -14,7 +14,7 @@ chmod +x ../../../src/common/scripts/vcpkg_install.sh
 # chmod +x ../../../src/common/scripts/opencv_install.sh
 chmod +x ../../../src/common/scripts/ros_install.sh
 chmod +x ../../../src/common/scripts/dependencies_install.sh
-chmod +x ../../../src/common/scripts/mavros_install.sh
+chmod +x ../../../src/common/scripts/px4/mavros_install.sh
 
 ../../../src/common/scripts/base.sh
 ../../../src/common/scripts/cmake_install.sh aarch64
@@ -23,4 +23,4 @@ chmod +x ../../../src/common/scripts/mavros_install.sh
 # ../../../src/common/scripts/opencv_install.sh
 ../../../src/common/scripts/ros_install.sh
 ../../../src/common/scripts/dependencies_install.sh
-../../../src/common/scripts/mavros_install.sh
+../../../src/common/scripts/px4/mavros_install.sh
