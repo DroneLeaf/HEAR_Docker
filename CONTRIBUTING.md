@@ -53,12 +53,12 @@ If you need to add a new framwork like `ros` or add any dev toolkit , you just c
     - add your file 
     
     ```bash
-    chmod +x ../../src/common/scripts/${toolname}_install.sh
+    chmod +x ../../../src/common/scripts/${toolname}_install.sh
 
-    ../../src/common/scripts/${toolname}_install.sh
+    ../../../src/common/scripts/${toolname}_install.sh
     ```
 
 
 ## Add Dependency
 
-All needed dependencies , packages and plugings can be added inside `dependencies_install.sh` file at `src/common/scripts` directory
+All needed dependencies , packages and plugings can be added inside [`dependencies_install.sh`](src/common/scripts/dependencies_install.sh) file at `src/common/scripts` directory

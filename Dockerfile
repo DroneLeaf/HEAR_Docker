@@ -54,9 +54,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ADD /src/common/scripts/vcpkg_install.sh /scripts/vcpkg_install.sh
 RUN chmod +x scripts/vcpkg_install.sh
-RUN if [ "$TARGET_UBUNTU" = "ON" ]; then\
-    ./scripts/vcpkg_install.sh; \
-  fi;
+# RUN if [ "$TARGET_UBUNTU" = "ON" ]; then\
+#     ./scripts/vcpkg_install.sh; \
+#   fi;
+RUN ./scripts/vcpkg_install.sh
 
 CMD ["bash"]
 
@@ -96,8 +97,39 @@ RUN ./scripts/mavlink_install.sh
 
 
 ### All Sections variance here
-#################################################
-# ORIN_UBUNTU20 Section Start
+
+####################### 1️⃣ RPI_UBUNTU20  ########################
+# 1. RPI_UBUNTU20 Section Start
+
+# #### add and expose sh files👇👇
+
+
+# #### target condition excute
+RUN if [ "$TARGET_RPI" = "ON" ]; then\
+     # run your sh file here 👇👇
+     #./scripts/Qgroundcontrol_install.sh; \
+    #
+  fi;
+
+####################### 👌 END Target 👌 ######################## 
+
+####################### 2️⃣ SITL_UBUNTU20  #######################
+# 2. SITL_UBUNTU20 Section Start
+
+# #### add and expose sh files👇👇
+
+
+# #### target condition excute
+RUN if [ "$TARGET_SITL" = "ON" ]; then\
+     # run your sh file here 👇👇
+     #./scripts/Qgroundcontrol_install.sh; \
+    #
+  fi;
+
+####################### 👌 END Target 👌 ######################## 
+
+####################### 3️⃣ ORIN_UBUNTU20  #######################
+# 3. ORIN_UBUNTU20 Section Start
 
 # #### add and expose sh files
 ADD /src/common/scripts/Qgroundcontrol_install.sh /scripts/Qgroundcontrol_install.sh
@@ -110,8 +142,9 @@ RUN if [ "$TARGET_ORIN" = "ON" ]; then\
     #
   fi;
 
+####################### 👌 END Target 👌 ######################## 
 
-#################################################
+
 
 
 ARG USERNAME
