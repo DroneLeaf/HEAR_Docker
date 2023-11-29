@@ -6,3 +6,4 @@ src/targets/SITL_UBUNTU20/Dockerfile
 hear_fc_devel.zip
 commands.sh
 directory-structure.md
+install_geographiclib_datasets.sh

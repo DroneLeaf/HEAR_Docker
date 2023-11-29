@@ -108,6 +108,7 @@ RUN ./scripts/mavlink_install.sh
 RUN if [ "$TARGET_RPI" = "ON" ]; then\
      # run your sh file here 👇👇
      #./scripts/Qgroundcontrol_install.sh; \
+     echo "TARGET_RPI Applied";\
     #
   fi;
 
@@ -123,6 +124,7 @@ RUN if [ "$TARGET_RPI" = "ON" ]; then\
 RUN if [ "$TARGET_SITL" = "ON" ]; then\
      # run your sh file here 👇👇
      #./scripts/Qgroundcontrol_install.sh; \
+     echo "TARGET_SITL Applied";\
     #
   fi;
 
@@ -139,6 +141,7 @@ RUN chmod +x scripts/Qgroundcontrol_install.sh
 RUN if [ "$TARGET_ORIN" = "ON" ]; then\
      # run your sh file here 👇👇
     ./scripts/Qgroundcontrol_install.sh; \
+    echo "TARGET_ORIN Applied";\
     #
   fi;
 
