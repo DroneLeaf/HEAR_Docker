@@ -48,7 +48,30 @@ cd HEAR_Docker/src/targets/ORIN_UBUNTU20
 sudo ./full_system_installation.sh
 
 
+
 ```
+
+- ⚠️⚠️ **If you can not find roslaunch after install ros**
+
+```bash
+# source ros
+source /opt/ros/noetic/setup.bash
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+```
+
+- ⚠️⚠️ **If you can not find px4 after install mavros**
+
+```bash
+# source px4
+source ~/catkin_ws/devel/setup.bash
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+```
+
+
 
 
 
