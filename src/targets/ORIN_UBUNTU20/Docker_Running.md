@@ -48,7 +48,7 @@ sudo docker cp {CONTAINER ID}:/home/{username}/HEAR_FC src/targets/ORIN_UBUNTU20
 
 # EX: docker cp 7a349451cdc9:/home/{username}/HEAR_FC src/targets/ORIN_UBUNTU20/compiled_files
 
-# close and remove fc_orin image to save machine resources
+# close and remove fc_orin runing container to save machine resources
 sudo docker rm -f {CONTAINER ID}
 ```
 
