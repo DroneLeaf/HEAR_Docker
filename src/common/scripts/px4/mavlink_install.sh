@@ -9,6 +9,9 @@ echo "╩ ╩╩ ╩ ╚╝ ╩═╝┴┘└┘┴ ┴  ╩┘└┘└─┘ 
 apt-get update && apt-get install -y
 apt-get upgrade -y
 
+sudo apt-get install build-essential libgeographic-dev -y
+sudo apt-get install ros-noetic-mavlink -y
+sudo apt-get install ros-noetic-geographic-msgs -y
 
 sudo apt install python3 python3-pip
 pip3 install --user future
@@ -16,6 +19,7 @@ sudo apt install python3-lxml libxml2-utils
 sudo apt install python3-tk
 
 source /opt/ros/noetic/setup.bash
+
 
 cd
 git clone https://github.com/mavlink/mavlink.git --recursive

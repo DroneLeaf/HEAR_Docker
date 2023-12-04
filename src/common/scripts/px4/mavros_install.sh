@@ -9,6 +9,10 @@ ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /
 apt-get update && apt-get install -y gnupg
 apt-get upgrade -y
 
+sudo apt-get install build-essential libgeographic-dev -y
+sudo apt-get install ros-noetic-mavlink -y
+sudo apt-get install ros-noetic-geographic-msgs -y
+
 source /opt/ros/noetic/setup.bash
 
 sudo  apt-get install ros-noetic-mavros ros-noetic-mavros-extras
