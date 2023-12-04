@@ -47,7 +47,7 @@ sudo docker cp {CONTAINER ID}:/home/pi/HEAR_FC src/targets/RPI_UBUNTU20/compiled
 
 # EX: docker cp 7a349451cdc9:/home/pi/HEAR_FC src/targets/RPI_UBUNTU20/compiled_files
 
-# close and remove fc_rpi image to save machine resources
+# close and remove fc_rpi runing container to save machine resources
 sudo docker rm -f {CONTAINER ID}
 ```
 

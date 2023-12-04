@@ -104,7 +104,7 @@ RUN ./scripts/mavlink_install.sh
 # #### add and expose sh files👇👇
 
 
-# #### target condition excute
+# #### target condition execute
 RUN if [ "$TARGET_RPI" = "ON" ]; then\
      # run your sh file here 👇👇
      #./scripts/Qgroundcontrol_install.sh; \
@@ -120,7 +120,7 @@ RUN if [ "$TARGET_RPI" = "ON" ]; then\
 # #### add and expose sh files👇👇
 
 
-# #### target condition excute
+# #### target condition execute
 RUN if [ "$TARGET_SITL" = "ON" ]; then\
      # run your sh file here 👇👇
      #./scripts/Qgroundcontrol_install.sh; \
@@ -137,7 +137,7 @@ RUN if [ "$TARGET_SITL" = "ON" ]; then\
 ADD /src/common/scripts/Qgroundcontrol_install.sh /scripts/Qgroundcontrol_install.sh
 RUN chmod +x scripts/Qgroundcontrol_install.sh
 
-# #### target condition excute
+# #### target condition execute
 RUN if [ "$TARGET_ORIN" = "ON" ]; then\
      # run your sh file here 👇👇
     ./scripts/Qgroundcontrol_install.sh; \
@@ -194,7 +194,27 @@ RUN touch /home/$USERNAME/.bashrc
 
 ADD /src/common/scripts/hear_arch/hear_fc_install.sh /home/$USERNAME/scripts/hear_fc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_fc_install.sh
-RUN cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME
+RUN if [ "$WS_NAME" = "HEAR_FC" ]; then\
+    #
+    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME; \
+    #
+  fi;
+# RUN cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME
+
+
+ADD /src/common/scripts/hear_arch/hear_mc_install.sh /home/$USERNAME/scripts/hear_mc_install.sh
+RUN chmod +x  /home/$USERNAME/scripts/hear_mc_install.sh
+RUN if [ "$WS_NAME" = "HEAR_MC" ]; then\
+    #
+    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME; \
+    #
+  fi;
+# RUN cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME
+
+
+ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME/scripts/hear_configurations_install.sh
+RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
+RUN cd /home/$USERNAME/scripts && ./hear_configurations_install.sh
 
 # RUN bash -c "source /opt/ros/noetic/setup.bash"
 # RUN bash -c "echo "source /opt/ros/noetic/setup.bash" >> /home/$USERNAME/.bashrc"
