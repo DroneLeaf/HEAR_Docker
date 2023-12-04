@@ -10,6 +10,9 @@ ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /
 apt update && apt -y install build-essential git curl unzip tar zip
 apt update && apt -y install ninja-build
 
+sudo apt-get install autoconf-archive -y
+
+
 git clone https://github.com/Microsoft/vcpkg.git ~/vcpkg
 
 cd ~/vcpkg

@@ -29,3 +29,5 @@ apt install ros-noetic-slam-gmapping -y
 apt-get install ros-noetic-mavros* -y
 apt-get install -y ros-noetic-tf2-geometry-msgs
 apt-get install -y graphviz-dev
+
+## add your dependencies here 👇👇
