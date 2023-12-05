@@ -19,4 +19,4 @@ SLEEP_TIME=3
 # echo "Server did not come up after expected time. Failing."
 
 echo "app server is running."
-exit 1
+# exit 1
