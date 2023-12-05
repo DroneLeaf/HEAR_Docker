@@ -7,5 +7,5 @@ set -x
 #     service tomcat stop
 # fi
 
-cd ~/workspace
+cd /home/ubuntu/workspace
 docker-compose down
