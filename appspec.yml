@@ -4,6 +4,10 @@ files:
   - source: /aws
     destination: /usr/local/codedeployresources
 hooks:
+  DownloadBundle:
+    - location: aws/scripts/download-bundle.sh
+      timeout: 300
+      runas: root
   ApplicationStop:
     - location: aws/scripts/application-stop.sh
       timeout: 300
