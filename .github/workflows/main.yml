@@ -48,7 +48,7 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f test/Dockerfile \
           --progress=plain \
-          --build-arg GITHUB_ID="${{ GITHUB_ACTOR_ID }}" \
+          --build-arg GITHUB_ID="${GITHUB_ACTOR_ID}" \
           --build-arg GITHUB_TOKEN="${{ secrets.ACCESS_TOKEN }}" \
           --build-arg TARGET_UBUNTU="ON" \
           --build-arg USERNAME="pi" \
