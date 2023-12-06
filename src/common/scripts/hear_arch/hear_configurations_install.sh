@@ -6,7 +6,7 @@ echo "╦ ╦╔═╗╔═╗╦═╗    ╔═╗┌─┐┌┐┌┌─┐
 echo "╠═╣║╣ ╠═╣╠╦╝    ║  │ ││││├┤ ││ ┬│ │├┬┘├─┤ │ ││ ││││└─┐  ║│││└─┐ │ ├─┤│  │  ├─┤ │ ││ ││││  └─┐ │ ├─┤├┬┘ │   ";
 echo "╩ ╩╚═╝╩ ╩╩╚═────╚═╝└─┘┘└┘└  ┴└─┘└─┘┴└─┴ ┴ ┴ ┴└─┘┘└┘└─┘  ╩┘└┘└─┘ ┴ ┴ ┴┴─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘  └─┘ ┴ ┴ ┴┴└─ ┴   ";
 
-ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > 
+ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /etc/timezone 
 
 
 cd
