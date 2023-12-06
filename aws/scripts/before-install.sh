@@ -7,3 +7,9 @@ if [ -d /usr/local/codedeployresources ]; then
 fi
 
 mkdir -vp /usr/local/codedeployresources
+
+# Delete the old  HEAR_Docker_Deploy as needed.
+if [ -d /home/ubuntu/HEAR_Docker_Deploy ]; then
+    rm -rf /home/ubuntu/HEAR_Docker_Deploy/
+fi
+
