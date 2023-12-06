@@ -46,7 +46,13 @@ jobs:
           ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f test/Dockerfile .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f test/Dockerfile \
+          --progress=plain \
+          --build-arg GITHUB_ID="${{ GITHUB_ACTOR_ID }}" \
+          --build-arg GITHUB_TOKEN="${{ secrets.ACCESS_TOKEN }}" \
+          --build-arg TARGET_UBUNTU="ON" \
+          --build-arg USERNAME="pi" \
+          --build-arg WS_NAME="HEAR_FC" \ .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       # - name: Build and Package Maven
