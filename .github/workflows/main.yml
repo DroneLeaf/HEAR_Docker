@@ -54,7 +54,7 @@ jobs:
         run: |
           echo ${{ github.triggering_actor }}
           echo ${{ secrets.GITHUB_TOKEN }}
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile_2 \
+          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
           --build-arg GITHUB_TOKEN="${{ secrets.PAT_TOKEN }}" \
