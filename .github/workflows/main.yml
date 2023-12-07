@@ -46,10 +46,10 @@ jobs:
           ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}
           IMAGE_TAG: latest
         run: |
-          echo ${{github.actor_id}}
+          echo ${{github.github.actor}}
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --progress=plain \
-          --build-arg GITHUB_ID="${{github.actor_id}}" \
+          --build-arg GITHUB_ID="${{github.github.actor}}" \
           --build-arg GITHUB_TOKEN="${{ secrets.ACCESS_TOKEN }}" \
           --build-arg TARGET_UBUNTU="ON" \
           --build-arg USERNAME="pi" \
