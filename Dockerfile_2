@@ -21,6 +21,10 @@ RUN git config \
     url."https://${GITHUB_ID}:${GITHUB_TOKEN}@github.com/".insteadOf \
     "https://github.com/"
 
+
+RUN git config --global credential.helper '!f() { echo "username=oauth2_token"; echo "password=${GITHUB_TOKEN}"; }; f'
+
+
 ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME/scripts/hear_configurations_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
 RUN cd /home/$USERNAME/scripts && ./hear_configurations_install.sh
