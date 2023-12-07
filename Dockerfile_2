@@ -16,10 +16,7 @@ ARG GITHUB_TOKEN
 # setup git credentials
 RUN git config --global user.name "docker image"
 
-RUN git config \
-    --global \
-    url."https://${GITHUB_ID}:${GITHUB_TOKEN}@github.com/".insteadOf \
-    "https://github.com/"
+
 
 
 RUN git config --global credential.helper '!f() { echo "username=oauth2_token"; echo "password=${GITHUB_TOKEN}"; }; f'
