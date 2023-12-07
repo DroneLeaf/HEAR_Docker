@@ -117,7 +117,7 @@ cp -r  compiled_files/compiled_files ~/HEAR_FC
 1. install Docker extension : \
  open the Extensions view (Ctrl+Shift+X), search for docker to filter results and select Docker extension authored by Microsoft.
 
-![Docker vs extension](https://code.visualstudio.com/assets/docs/containers/overview/installation-extension-search.png)
+![Docker vs extension](https://camo.githubusercontent.com/1c9f7f92c774e1b5a79192b3ed142c4206b2fcc6366b1ab1da513a7c13356ece/68747470733a2f2f636f64652e76697375616c73747564696f2e636f6d2f6173736574732f646f63732f636f6e7461696e6572732f6f766572766965772f696e7374616c6c6174696f6e2d657874656e73696f6e2d7365617263682e706e67)
 
 2. Make sure that the container is running by getting it's id \
 ⚠️⚠️ If you got an id then ignore step 2
