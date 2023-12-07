@@ -1,0 +1,26 @@
+
+
+FROM ubuntu:20.04 AS base
+ARG DEBIAN_FRONTEND=noninteractive # ignore user input required
+
+ADD /src/common/scripts/base.sh /scripts/base.sh
+RUN chmod +x scripts/base.sh
+RUN ./scripts/base.sh
+
+RUN apt update && \
+    apt -y install git curl
+
+ARG GITHUB_ID
+ARG GITHUB_TOKEN
+
+# setup git credentials
+RUN git config --global user.name "docker image"
+
+RUN git config \
+    --global \
+    url."https://${GITHUB_ID}:${GITHUB_TOKEN}@github.com/".insteadOf \
+    "https://github.com/"
+
+ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME/scripts/hear_configurations_install.sh
+RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
+RUN cd /home/$USERNAME/scripts && ./hear_configurations_install.sh
