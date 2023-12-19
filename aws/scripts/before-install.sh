@@ -13,3 +13,8 @@ if [ -d /home/ubuntu/HEAR_Docker_Deploy ]; then
     rm -rf /home/ubuntu/HEAR_Docker_Deploy/
 fi
 
+# Delete the old  HEAR_Docker_Deploy as needed.
+if [ -d /home/ubuntu/workspace/HEAR_Docker_Deploy ]; then
+    rm -rf /home/ubuntu/workspace/HEAR_Docker_Deploy/
+fi
+
