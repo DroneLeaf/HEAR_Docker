@@ -29,14 +29,14 @@ docker build \
 - ### How To Run The Docker Image
 
 ```bash 
-docker run -it -d fc_rpi "/home/pi/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
+docker run -it -d fc_rpi --entrypoint bash
 ```
 
 
 - ### how To Copy compiled files to host machine
 1. Get ```"CONTAINER ID"``` of ```'fc_rpi'``` image
 ```bash 
-docker ps -a  | grep 'fc_rpi' | awk '{print $1}'
+docker ps | grep 'fc_rpi' | awk '{print $1}'
 ```
 
 2. copy ```"CONTAINER ID"``` of ```'fc_rpi'``` image from the bash output
@@ -47,8 +47,6 @@ sudo docker cp {CONTAINER ID}:/home/pi/HEAR_FC src/targets/RPI_UBUNTU20/compiled
 
 # EX: docker cp 7a349451cdc9:/home/pi/HEAR_FC src/targets/RPI_UBUNTU20/compiled_files
 
-# close and remove fc_rpi runing container to save machine resources
-sudo docker rm -f {CONTAINER ID}
 ```
 
 4. Now you can find copied docker image output here >>> ```src/targets/RPI_UBUNTU20/compiled_files```
@@ -113,3 +111,30 @@ unzip hear_fc_devel.zip -d compiled_files
 cp -r  compiled_files/compiled_files ~/HEAR_FC
 
 ```
+
+# How To Open `Remote Dev Workspace` inside docker container via vscode
+
+1. install Docker extension : \
+ open the Extensions view (Ctrl+Shift+X), search for docker to filter results and select Docker extension authored by Microsoft.
+
+![Docker vs extension](https://camo.githubusercontent.com/1c9f7f92c774e1b5a79192b3ed142c4206b2fcc6366b1ab1da513a7c13356ece/68747470733a2f2f636f64652e76697375616c73747564696f2e636f6d2f6173736574732f646f63732f636f6e7461696e6572732f6f766572766965772f696e7374616c6c6174696f6e2d657874656e73696f6e2d7365617263682e706e67)
+
+2. Make sure that the container is running by getting it's id \
+⚠️⚠️ If you got an id then ignore step 2
+```bash
+# 1. check if the fc_rpi image is running by get it's id
+docker ps | grep 'fc_rpi' | awk '{print $1}'
+# if you got an id then ignore step 2
+
+# 2. Run fc_rpi docker image
+docker run -it -d fc_rpi --entrypoint bash
+```
+
+3. Open remote access on docker container workspace via vscode
+
+![Docker vs extension](/container_dev_instructions.gif)
+
+4. start develop inside docker container 
+
+5. Copy compiled files to host machine and transfer to deployment target
+

@@ -69,6 +69,7 @@ FROM $opencv_url AS opencv_base
 CMD ["bash"]
 
 FROM vcpkg_img
+ARG DEBIAN_FRONTEND=noninteractive
 RUN cd ~/
 
 # We have to update ipc msgmax so we can receive onnx data and for activate ipc on ubntu image
@@ -77,6 +78,7 @@ RUN sysctl -w kernel.msgmax=65536
 RUN echo dpkg -L opencv
 COPY --from=opencv_base usr/local  usr/local
 
+RUN apt-get -y install keyboard-configuration
 #install ros and it's dependencies
 ADD /src/common/scripts/ros_install.sh /scripts/ros_install.sh
 RUN chmod +x scripts/ros_install.sh
@@ -152,7 +154,9 @@ RUN if [ "$TARGET_ORIN" = "ON" ]; then\
 
 ARG USERNAME
 ARG WS_NAME
-
+ARG TARGET_RPI=OFF
+ARG TARGET_UBUNTU=OFF
+ARG TARGET_ORIN=OFF
 # #RUN useradd -p "" -ms /bin/bash $USERNAME && echo "$USERNAME:$USERNAME" | chpasswd && adduser $USERNAME sudo
 # RUN useradd -ms /bin/bash $USERNAME && \
 #     usermod -aG sudo $USERNAME
@@ -164,6 +168,8 @@ ARG WS_NAME
 #RUN chmod +x /scripts
 #RUN chgrp -R $USERNAME /scripts
 
+ARG GITHUB_ID
+ARG GITHUB_TOKEN
 
 RUN mkdir -p /home/$USERNAME/$WS_NAME
 WORKDIR /home/$USERNAME/$WS_NAME
