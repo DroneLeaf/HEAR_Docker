@@ -20,7 +20,6 @@ docker build \
 --build-arg TARGET_RPI="ON" \
 --build-arg USERNAME="pi" \
 --build-arg WS_NAME="HEAR_FC" \
-
 -t fc_rpi \
 .
 

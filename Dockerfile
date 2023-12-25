@@ -68,6 +68,9 @@ CMD ["bash"]
 FROM $opencv_url AS opencv_base
 CMD ["bash"]
 
+FROM ahmedhashimpro/hashim-ros AS ros_base
+CMD ["bash"]
+
 FROM vcpkg_img
 ARG DEBIAN_FRONTEND=noninteractive
 RUN cd ~/
@@ -77,12 +80,14 @@ RUN sysctl -w kernel.msgmax=65536
 
 RUN echo dpkg -L opencv
 COPY --from=opencv_base usr/local  usr/local
+COPY --from=ros_base /opt/ros  /opt/ros
+COPY --from=ros_base /usr/bin  /usr/bin
 
 RUN apt-get -y install keyboard-configuration
 #install ros and it's dependencies
-ADD /src/common/scripts/ros_install.sh /scripts/ros_install.sh
-RUN chmod +x scripts/ros_install.sh
-RUN ./scripts/ros_install.sh
+# ADD /src/common/scripts/ros_install.sh /scripts/ros_install.sh
+# RUN chmod +x scripts/ros_install.sh
+# RUN ./scripts/ros_install.sh
 
 ADD /src/common/scripts/dependencies_install.sh /scripts/dependencies_install.sh
 RUN chmod +x scripts/dependencies_install.sh
@@ -92,6 +97,7 @@ ADD /src/common/scripts/px4/mavros_install.sh /scripts/mavros_install.sh
 RUN chmod +x scripts/mavros_install.sh
 RUN ./scripts/mavros_install.sh
 
+RUN apt-get update && apt-get install -y python3 python3-distutils python3-pip python3-apt
 
 ADD /src/common/scripts/px4/mavlink_install.sh /scripts/mavlink_install.sh
 RUN chmod +x scripts/mavlink_install.sh
@@ -197,6 +203,11 @@ RUN echo "$TARGET_RPI TARGET_RPI2 sadsadsaadl kdjsadj sadjasl"
 RUN mkdir -p /home/$USERNAME/scripts
 
 RUN touch /home/$USERNAME/.bashrc
+COPY --from=ros_base /usr/include  /usr/include
+COPY --from=ros_base /usr/lib  /usr/lib 
+# COPY --from=ros_base /usr/local  /usr/local
+# COPY --from=ros_base /usr/sbin  /usr/sbin
+COPY --from=ros_base /usr/share  /usr/share
 
 ADD /src/common/scripts/hear_arch/hear_fc_install.sh /home/$USERNAME/scripts/hear_fc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_fc_install.sh

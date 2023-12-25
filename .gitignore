@@ -10,3 +10,6 @@ install_geographiclib_datasets.sh
 
 src/targets/SITL_UBUNTU20/opencv*
 src/targets/ORIN_UBUNTU20/opencv*
+test
+ros_build
+lib

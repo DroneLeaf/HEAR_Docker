@@ -21,7 +21,6 @@ docker build \
 --build-arg opencv_url="cyrilix/opencv-runtime:4.8.0" \
 --build-arg USERNAME="{username}" \
 --build-arg WS_NAME="HEAR_FC" \
-
 -t fc_sitl \
 .
 
