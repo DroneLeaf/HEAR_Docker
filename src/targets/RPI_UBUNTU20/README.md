@@ -36,9 +36,10 @@ cd
 
 git clone https://github.com/ahmed-hashim-pro/HEAR_Docker
 
-sudo chmod -R +x HEAR_Docker/src/targets/RPI_UBUNTU20
+cd HEAR_Docker
+sudo chmod -R +x src/targets/RPI_UBUNTU20
 
-cd HEAR_Docker/src/targets/RPI_UBUNTU20
+cd src/targets/RPI_UBUNTU20
 
 sudo ./full_system_installation.sh
 
@@ -64,6 +65,17 @@ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 ```
+
+## Enable UART communication on Pi4 Ubuntu 20.04
+
+```bash
+sudo chmod +x src/common/scripts/RPI_UBUNTU20/UART_enable.sh
+
+./src/common/scripts/RPI_UBUNTU20/UART_enable.sh
+
+```
+
+
 
 
  # How To use `Cross-Compilation`  or docker `build and run`
