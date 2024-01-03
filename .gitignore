@@ -12,3 +12,7 @@ src/targets/SITL_UBUNTU20/opencv*
 src/targets/ORIN_UBUNTU20/opencv*
 lib
 ros_build
+CMDS
+opencv_build/Dockerfile
+qt_build/Dockerfile
+vcpkg_build/Dockerfile
