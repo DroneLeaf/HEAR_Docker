@@ -13,3 +13,7 @@ src/targets/ORIN_UBUNTU20/opencv*
 test
 ros_build
 lib
+CMDS
+opencv_build
+qt_build
+vcpkg_build

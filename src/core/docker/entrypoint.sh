@@ -1,20 +1,25 @@
 #!/bin/bash
- 
+
+# Source mavlink
+ if [ -f ~/catkin_ws/devel/setup.bash ]
+then
+  source ~/catkin_ws/devel/setup.bash
+fi
+
 # Source ROS and Catkin workspaces
 source /opt/ros/noetic/setup.bash
-# sudo echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-# source ~/.bashrc
-#source ~/catkin_ws/devel/setup.bash
-source $1/devel/setup.bash
-# sudo echo "source $1/devel/setup.bash" >> ~/.bashrc
-# source ~/.bashrc
-# if [ -f $2/devel/setup.bash ]
-# then
-#   source $2/devel/setup.bash
-# fi
 
-echo "start Catkin workspace!"
-#roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV
+# Source workspace 
+source $1/devel/setup.bash
+
+# Source QT 
+if [ -d "/opt/Qt5.15/bin" ]
+then
+  export PATH=/opt/Qt5.15/bin:$PATH
+  echo $(qmake --version)
+fi
+
+echo "start Running Docker Workspace!"
  
 # Set environment variables
 #export TURTLEBOT3_MODEL=waffle_pi

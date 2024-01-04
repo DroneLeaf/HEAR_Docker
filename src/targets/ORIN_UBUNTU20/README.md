@@ -41,9 +41,10 @@ cd
 
 git clone https://github.com/ahmed-hashim-pro/HEAR_Docker
 
-sudo chmod -R +x HEAR_Docker/src/targets/ORIN_UBUNTU20
+cd HEAR_Docker
+sudo chmod -R +x src/targets/ORIN_UBUNTU20
 
-cd HEAR_Docker/src/targets/ORIN_UBUNTU20
+cd src/targets/ORIN_UBUNTU20
 
 sudo ./full_system_installation.sh
 
@@ -77,3 +78,13 @@ source ~/.bashrc
 
  # How To use `Cross-Compilation`  or docker `build and run`
 All instructions is [here](Docker_Running.md)
+
+
+# Camera Setup and Calibration
+All instructions is [here](camera_calibration.md)
+
+
+# NVMe Installation Guide
+All instructions is [here](NVMe_Installation.md)
+
+

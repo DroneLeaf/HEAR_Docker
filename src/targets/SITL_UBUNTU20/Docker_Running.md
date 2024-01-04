@@ -18,7 +18,8 @@ docker build \
 --build-arg GITHUB_ID="{ID_HERE}" \
 --build-arg GITHUB_TOKEN="{TOKEN_HERE}" \
 --build-arg TARGET_UBUNTU="ON" \
---build-arg opencv_url="cyrilix/opencv-runtime:4.8.0" \
+--build-arg opencv_url="geohashim/opencv:4.0.0" \
+--build-arg qt_url="geohashim/qt" \
 --build-arg USERNAME="{username}" \
 --build-arg WS_NAME="HEAR_FC" \
 -t fc_sitl \

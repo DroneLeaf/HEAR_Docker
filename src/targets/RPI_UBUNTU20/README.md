@@ -80,3 +80,37 @@ sudo chmod +x src/common/scripts/RPI_UBUNTU20/UART_enable.sh
 
  # How To use `Cross-Compilation`  or docker `build and run`
 All instructions is [here](Docker_Running.md)
+
+
+---
+<br>
+
+# How to change the Hostname
+
+
+1. **Check the cloud-init configuration file:**
+
+```bash
+sudo nano /etc/cloud/cloud.cfg
+```
+Look for a line like `preserve_hostname`: false and change it to `true`. Save the file.
+
+2. **Set new hostname**
+
+```bash
+sudo hostnamectl set-hostname ${"newhostname"}
+```
+ 3. **Edit the /etc/hosts file to reflect the new hostname. Open the file with a text editor:**
+
+ ```bash
+ sudo nano /etc/hosts
+ ```
+ Find the line that starts with 127.0.1.1 and replace the old hostname with the new one. Save the changes and exit the editor.
+
+For example, if your old hostname was "raspberrypi" and your new hostname is "myraspberrypi," you would change this line.
+
+4. **Reboot your Raspberry Pi to apply the changes:**
+
+```bash
+sudo reboot
+```

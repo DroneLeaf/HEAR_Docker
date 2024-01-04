@@ -1,4 +1,4 @@
-# Raspberry Pi Ubuntu Server 20.04 Docker Running
+# Jetson Orin Ubuntu Server 20.04 Docker Running
 
 ## BUILD AND RUN
 
@@ -18,7 +18,8 @@ docker build \
 --build-arg GITHUB_ID="{ID_HERE}" \
 --build-arg GITHUB_TOKEN="{TOKEN_HERE}" \
 --build-arg TARGET_ORIN="ON" \
---build-arg opencv_url="cyrilix/opencv-runtime:4.8.0" \
+--build-arg opencv_url="geohashim/opencv:4.0.0" \
+--build-arg qt_url="geohashim/qt" \
 --build-arg USERNAME="{username}" \
 --build-arg WS_NAME="HEAR_FC" \
 -t fc_orin \
@@ -29,7 +30,11 @@ docker build \
 - ### How To Run The Docker Image
 
 ```bash 
-docker run -it -d fc_orin "/home/{username}/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
+docker run -it -d fc_orin --entrypoint bash
+
+# docker run -it -d fc_orin "/home/{username}/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
+
+
 ```
 
 
@@ -48,7 +53,7 @@ sudo docker cp {CONTAINER ID}:/home/{username}/HEAR_FC src/targets/ORIN_UBUNTU20
 # EX: docker cp 7a349451cdc9:/home/{username}/HEAR_FC src/targets/ORIN_UBUNTU20/compiled_files
 
 # close and remove fc_orin runing container to save machine resources
-sudo docker rm -f {CONTAINER ID}
+# sudo docker rm -f {CONTAINER ID}
 ```
 
 4. Now you can find copied docker image output here >>> ```src/targets/ORIN_UBUNTU20/compiled_files```
@@ -88,7 +93,7 @@ cp -r  compiled_files/compiled_files ~/HEAR_FC
 
 <br>
 
-# Transfer via ssh to raspberry pi
+# Transfer via ssh to jetson orin
 
 **We can do that In 2 steps, One For Each Device**
 
@@ -98,13 +103,13 @@ cp -r  compiled_files/compiled_files ~/HEAR_FC
 # zip desired folder
 pushd src/targets/ORIN_UBUNTU20; sudo zip -r ../../../hear_fc_devel.zip ./compiled_files; popd
 
-# copy to raspberry pi device
-sudo scp hear_fc_devel.zip pi@{ip}:/home/{username}/hear_fc_devel.zip
+# copy to jetson orin device
+sudo scp hear_fc_devel.zip {deviceName}@{ip}:/home/{username}/hear_fc_devel.zip
 
 
 ```
 
-2- On Raspberry Pi
+2- On Jetson Orin
 
 ``` bash
 
