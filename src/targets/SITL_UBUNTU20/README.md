@@ -38,9 +38,10 @@ cd
 
 git clone https://github.com/ahmed-hashim-pro/HEAR_Docker
 
-sudo chmod -R +x HEAR_Docker/src/targets/SITL_UBUNTU20
+cd HEAR_Docker
+sudo chmod -R +x src/targets/SITL_UBUNTU20
 
-cd HEAR_Docker/src/targets/SITL_UBUNTU20
+cd src/targets/SITL_UBUNTU20
 
 sudo ./full_system_installation.sh
 
