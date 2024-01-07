@@ -88,3 +88,35 @@ All instructions is [here](camera_calibration.md)
 All instructions is [here](NVMe_Installation.md)
 
 
+
+# Available PreBuilt images:
+
+>> ⚠️⚠️  DEVELOPMENT upload directory\
+>> **ORIN_UBUNTU20**
+https://droneleaf.sharepoint.com/:f:/s/technical/EkNVPxWC6YdPo82ESxa7CpcB3G8scw4YFN2uTX1I8HYOEw?e=0LUICw
+
+- **DEVELOPMENT**
+
+| Author   |      Date      |  LINK |
+|----------|:-------------:|:------:|
+| developer name |  7/JAN/2024 | https://test.com |
+
+<br>
+ 
+---
+<br>
+
+
+
+
+>> ⚠️⚠️  PRODUCTION upload directory\
+>> **ORIN_UBUNTU20**
+https://droneleaf.sharepoint.com/:f:/s/technical/EkmAyGBlZShFvVII91LPNH4BftBT4xf5gwoFZQI6Bsj9TA?e=LB4Vv6
+
+
+- **PRODUCTION**    
+
+
+| Author   |      Date      |  LINK |
+|----------|:-------------:|:------:|
+| developer name |  7/JAN/2024 | https://test.com |
