@@ -117,7 +117,7 @@ sudo reboot
 
 # Available PreBuilt images:
 
->>Just upload the image inside target directory and grap the download link
+>>Just upload the image inside target directory and grab the download link
 
 >> ⚠️⚠️  DEVELOPMENT upload directory\
 **RPI_UBUNTU20**
