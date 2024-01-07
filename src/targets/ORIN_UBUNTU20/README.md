@@ -91,6 +91,9 @@ All instructions is [here](NVMe_Installation.md)
 
 # Available PreBuilt images:
 
+>>Just upload the image inside target directory and grap the download link
+
+
 >> ⚠️⚠️  DEVELOPMENT upload directory\
 >> **ORIN_UBUNTU20**
 https://droneleaf.sharepoint.com/:f:/s/technical/EkNVPxWC6YdPo82ESxa7CpcB3G8scw4YFN2uTX1I8HYOEw?e=0LUICw

@@ -117,9 +117,13 @@ sudo reboot
 
 # Available PreBuilt images:
 
+>>Just upload the image inside target directory and grap the download link
+
 >> ⚠️⚠️  DEVELOPMENT upload directory\
 **RPI_UBUNTU20**
 https://droneleaf.sharepoint.com/:f:/s/technical/Epcvs8djDgBBmDXRLSfzWqwBDuH-a8uszOdTgNiNsdsTeQ?e=aLNODQ
+
+
 
 - **DEVELOPMENT**
 
