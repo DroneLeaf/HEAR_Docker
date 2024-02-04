@@ -53,7 +53,7 @@ jobs:
           IMAGE_TAG: latest
         run: |
           echo ${{ github.triggering_actor }}
-          echo ${{ secrets.GITHUB_TOKEN }}
+          echo ${{ secrets.PAT_TOKEN }}
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f test/Dockerfile \
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
