@@ -57,13 +57,8 @@ jobs:
           IMAGE_TAG: latest
         run: |
           echo ${{ github.triggering_actor }}
-<<<<<<< HEAD
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --platform=linux/arm64 \
-=======
-          echo ${{ secrets.PAT_TOKEN }}
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f test/Dockerfile \
->>>>>>> c6da42be3035462e6b7cc1b077e9a97f1559f1a2
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
           --build-arg GITHUB_TOKEN="${{ secrets.PAT_TOKEN }}" \
