@@ -21,6 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Checkout Repository
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -53,14 +57,16 @@ jobs:
           IMAGE_TAG: latest
         run: |
           echo ${{ github.triggering_actor }}
-          echo ${{ secrets.GITHUB_TOKEN }}
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f test/Dockerfile \
+          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          --platform=linux/arm64 \
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
           --build-arg GITHUB_TOKEN="${{ secrets.PAT_TOKEN }}" \
-          --build-arg TARGET_UBUNTU="ON" \
-          --build-arg USERNAME="pi" \
-          --build-arg WS_NAME="HEAR_FC"
+          --build-arg TARGET_ORIN="ON" \
+          --build-arg opencv_url="geohashim/opencv:4.0.0" \
+          --build-arg USERNAME="hashim" \
+          --build-arg WS_NAME="HEAR_FC" \
+          --build-arg qt_url="geohashim/qt"
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       # - name: Build and Package Maven
