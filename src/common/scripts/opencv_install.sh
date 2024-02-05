@@ -14,19 +14,19 @@ apt-get update && apt-get install -y --no-install-recommends \
             rm -rf /var/lib/apt/lists/*
 
 
-curl -Lo opencv.zip https://github.com/opencv/opencv/archive/4.8.1.zip && \
+curl -Lo opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip && \
             unzip -q opencv.zip && \
-            curl -Lo opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.8.1.zip && \
+            curl -Lo opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.0.0.zip && \
             unzip -q opencv_contrib.zip && \
             rm opencv.zip opencv_contrib.zip && \
-            cd opencv-4.8.1 && \
+            cd opencv-4.0.0 && \
             mkdir build && cd build && \
             cmake -D CMAKE_BUILD_TYPE=RELEASE \
                   -D WITH_IPP=OFF \
                   -D WITH_OPENGL=OFF \
                   -D WITH_QT=OFF \
                   -D CMAKE_INSTALL_PREFIX=/usr/local \
-                  -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.8.1/modules \
+                  -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.0.0/modules \
                   -D OPENCV_ENABLE_NONFREE=ON \
                   -D WITH_JASPER=OFF \
                   -D WITH_TBB=ON \

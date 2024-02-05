@@ -41,9 +41,10 @@ cd
 
 git clone https://github.com/ahmed-hashim-pro/HEAR_Docker
 
-sudo chmod -R +x HEAR_Docker/src/targets/ORIN_UBUNTU20
+cd HEAR_Docker
+sudo chmod -R +x src/targets/ORIN_UBUNTU20
 
-cd HEAR_Docker/src/targets/ORIN_UBUNTU20
+cd src/targets/ORIN_UBUNTU20
 
 sudo ./full_system_installation.sh
 
@@ -77,3 +78,48 @@ source ~/.bashrc
 
  # How To use `Cross-Compilation`  or docker `build and run`
 All instructions is [here](Docker_Running.md)
+
+
+# Camera Setup and Calibration
+All instructions is [here](camera_calibration.md)
+
+
+# NVMe Installation Guide
+All instructions is [here](NVMe_Installation.md)
+
+
+
+# Available PreBuilt images:
+
+>>Just upload the image inside target directory and grab the download link
+
+
+>> ⚠️⚠️  DEVELOPMENT upload directory\
+>> **ORIN_UBUNTU20**
+https://droneleaf.sharepoint.com/:f:/s/technical/EkNVPxWC6YdPo82ESxa7CpcB3G8scw4YFN2uTX1I8HYOEw?e=0LUICw
+
+- **DEVELOPMENT**
+
+| Author   |      Date      |  LINK |
+|----------|:-------------:|:------:|
+| developer name |  7/JAN/2024 | https://test.com |
+
+<br>
+ 
+---
+<br>
+
+
+
+
+>> ⚠️⚠️  PRODUCTION upload directory\
+>> **ORIN_UBUNTU20**
+https://droneleaf.sharepoint.com/:f:/s/technical/EkmAyGBlZShFvVII91LPNH4BftBT4xf5gwoFZQI6Bsj9TA?e=LB4Vv6
+
+
+- **PRODUCTION**    
+
+
+| Author   |      Date      |  LINK |
+|----------|:-------------:|:------:|
+| developer name |  7/JAN/2024 | https://test.com |

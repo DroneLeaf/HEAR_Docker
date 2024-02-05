@@ -30,6 +30,8 @@ jobs:
         with:
           role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
           role-session-name: GitHub-Action-Role
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
@@ -57,7 +59,7 @@ jobs:
           IMAGE_TAG: latest
         run: |
           echo ${{ github.triggering_actor }}
-          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f test/Dockerfile \
           --platform=linux/arm64 \
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
