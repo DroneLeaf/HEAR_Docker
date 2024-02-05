@@ -118,3 +118,19 @@ unzip hear_fc_devel.zip -d compiled_files
 cp -r  compiled_files/compiled_files ~/HEAR_FC
 
 ```
+
+
+# get prebuilded docker image from aws
+
+```bash
+sudo apt  install awscli -y
+
+aws configure set aws_access_key_id "AKIAUJ6SOV74AAMHJYHS" --profile ecrpush && aws configure set aws_secret_access_key "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" --profile ecrpush && aws configure set region "me-south-1" --profile ecrpush
+
+aws ecr get-login-password --region me-south-1 --profile ecrpush | docker login --username AWS --password-stdin 296257236984.dkr.ecr.me-south-1.amazonaws.com
+
+docker pull 296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest
+
+docker tag  296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest fc_orin:latest
+
+```

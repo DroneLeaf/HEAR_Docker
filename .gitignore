@@ -17,3 +17,4 @@ CMDS
 opencv_build
 qt_build
 vcpkg_build
+.idea

@@ -226,13 +226,18 @@ ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME
 RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
 RUN cd /home/$USERNAME/scripts && ./hear_configurations_install.sh
 
-# RUN bash -c "source /opt/ros/noetic/setup.bash"
-# RUN bash -c "echo "source /opt/ros/noetic/setup.bash" >> /home/$USERNAME/.bashrc"
-# RUN bash -c "source /home/$USERNAME/.bashrc"
+RUN bash -c "source /opt/ros/noetic/setup.bash"
+RUN bash -c "echo source /opt/ros/noetic/setup.bash >> '/root/.bashrc'"
+RUN bash -c "source /root/.bashrc"
 
-# RUN bash -c "source /home/$USERNAME/$WS_NAME/devel/setup.bash"
-# RUN bash -c "echo "source /home/$USERNAME/$WS_NAME/devel/setup.bash" >> /home/$USERNAME/.bashrc"
-# RUN bash -c "source /home/$USERNAME/.bashrc"
+RUN bash -c "source /home/$USERNAME/$WS_NAME/devel/setup.bash"
+RUN bash -c "echo source /home/$USERNAME/$WS_NAME/devel/setup.bash >> '/root/.bashrc'"
+RUN bash -c "source /root/.bashrc"
+
+# remove git credentials
+# RUN rm -f ~/.gitconfig
+# ARG GITHUB_TOKEN=""
+
 
 ADD /src/core/docker/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
