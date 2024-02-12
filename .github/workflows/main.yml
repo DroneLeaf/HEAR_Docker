@@ -61,6 +61,8 @@ jobs:
           echo ${{ github.triggering_actor }}
           docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --platform=linux/arm64 \
+          --cache-to type=gha,url=...,token=...,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          --cache-from type=gha,url=...,token=...,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
           --build-arg GITHUB_TOKEN="${{ secrets.PAT_TOKEN }}" \
