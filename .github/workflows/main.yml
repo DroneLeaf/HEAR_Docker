@@ -65,8 +65,8 @@ jobs:
           docker buildx build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --builder=hashimBuilder \
           --push \
-          --cache-to type=gha,token=dasdjhiuwenoicklxcn,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-          --cache-from type=gha,token=dasdjhiuwenoicklxcn,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          --cache-to type=gha,token=dasdjhiuwenoicklxcn,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
+          --cache-from type=gha,token=dasdjhiuwenoicklxcn,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
           --build-arg GITHUB_TOKEN="${{ secrets.PAT_TOKEN }}" \
