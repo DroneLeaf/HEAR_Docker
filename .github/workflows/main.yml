@@ -64,8 +64,8 @@ jobs:
           docker buildx create --name hashimBuilder --driver=docker-container
           docker buildx build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --builder=hashimBuilder \
-          --cache-to type=gha,url=...,token=...,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-          --cache-from type=gha,url=...,token=...,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          --cache-to type=gha,token=dasdjhiuwenoicklxcn,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          --cache-from type=gha,token=dasdjhiuwenoicklxcn,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
           --build-arg GITHUB_TOKEN="${{ secrets.PAT_TOKEN }}" \
