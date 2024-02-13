@@ -62,7 +62,7 @@ jobs:
         run: |
           echo ${{ github.triggering_actor }}
           docker buildx build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-          --driver=docker-container
+          --driver=docker-container \
           --cache-to type=gha,url=...,token=...,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --cache-from type=gha,url=...,token=...,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --progress=plain \
