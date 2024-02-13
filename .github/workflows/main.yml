@@ -61,8 +61,9 @@ jobs:
           IMAGE_TAG: latest
         run: |
           echo ${{ github.triggering_actor }}
+          docker buildx create --name hashimBuilder --driver=docker-container
           docker buildx build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-          --driver=docker-container \
+          --builder=hashimBuilder \
           --cache-to type=gha,url=...,token=...,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --cache-from type=gha,url=...,token=...,scope=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --progress=plain \
