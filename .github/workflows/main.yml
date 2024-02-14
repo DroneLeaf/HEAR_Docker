@@ -59,7 +59,13 @@ jobs:
         run: |
              echo "::set-output name=actor_id::$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/${{ github.actor }} | jq -r .id)"
 
-
+      - name: Expose GitHub Runtime
+        uses: crazy-max/ghaction-github-runtime@v3
+      
+      - name: Env
+        run: |
+          # ACTIONS_RUNTIME_TOKEN, ACTIONS_RUNTIME_URL should be exposed
+          env|sort
       - name: Build and push the tagged docker image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-pf-aws-ecr.outputs.registry }}
@@ -68,11 +74,11 @@ jobs:
         run: |
           echo ${{ github.triggering_actor }}
           docker buildx create --name hashimBuilder --driver=docker-container
-          docker buildx build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          docker buildx build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f test/Dockerfile \
           --builder=hashimBuilder \
           --push \
-          --cache-to type=gha,token=dasdjhiuwenoicklxcn,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
-          --cache-from type=gha,token=dasdjhiuwenoicklxcn,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
+          --cache-to type=gha,mode=max,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
+          --cache-from type=gha,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
           --progress=plain \
           --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
           --build-arg GITHUB_TOKEN="${{ secrets.PAT_TOKEN }}" \
