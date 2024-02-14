@@ -30,6 +30,12 @@ jobs:
         with:
           driver: docker-container
 
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            hashim/docker/cache
+          key: ${{ runner.os }}-123
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
