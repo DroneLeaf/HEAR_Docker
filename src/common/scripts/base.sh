@@ -5,8 +5,14 @@ echo "╔╗ ┌─┐┌─┐┌─┐  ╦┌┐┌┌─┐┌┬┐┌─�
 echo "╠╩╗├─┤└─┐├┤   ║│││└─┐ │ ├─┤│  │  ├─┤ │ ││ ││││  └─┐ │ ├─┤├┬┘ │   ";
 echo "╚═╝┴ ┴└─┘└─┘  ╩┘└┘└─┘ ┴ ┴ ┴┴─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘  └─┘ ┴ ┴ ┴┴└─ ┴   ";
 
+sudo ()
+{
+[[ $EUID = 0 ]] || set -- command sudo "$@"
+"$@"
+}
+
 ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /etc/timezone
 
-apt-get -y upgrade && apt-get -y update && apt-get install -y tcl
-apt-get -y install g++  git curl zip pkg-config gnupg
+sudo apt-get -y upgrade && apt-get -y update && apt-get install -y tcl
+sudo apt-get -y install g++  git curl zip pkg-config gnupg
 

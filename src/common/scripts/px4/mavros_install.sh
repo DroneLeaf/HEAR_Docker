@@ -4,10 +4,17 @@ echo "╔╦╗┌─┐┬  ┬┬─┐┌─┐┌─┐  ╦┌┐┌┌─�
 echo "║║║├─┤└┐┌┘├┬┘│ │└─┐  ║│││└─┐ │ ├─┤│  │  ├─┤ │ ││ ││││  └─┐ │ ├─┤├┬┘ │   ";
 echo "╩ ╩┴ ┴ └┘ ┴└─└─┘└─┘  ╩┘└┘└─┘ ┴ ┴ ┴┴─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘  └─┘ ┴ ┴ ┴┴└─ ┴   ";
 
+
+sudo ()
+{
+[[ $EUID = 0 ]] || set -- command sudo "$@"
+"$@"
+}
+
 ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /etc/timezone
 
-apt-get update && apt-get install -y gnupg
-apt-get upgrade -y
+sudo apt-get update && sudo apt-get install -y gnupg
+sudo apt-get upgrade -y
 
 sudo apt-get install build-essential libgeographic-dev -y
 sudo apt-get install ros-noetic-mavlink -y
@@ -18,8 +25,8 @@ source /opt/ros/noetic/setup.bash
 sudo  apt-get install ros-noetic-mavros ros-noetic-mavros-extras
 
 wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
-chmod +x install_geographiclib_datasets.sh
-./install_geographiclib_datasets.sh
+sudo chmod +x install_geographiclib_datasets.sh
+sudo ./install_geographiclib_datasets.sh
 
 
 sudo  apt install python3-catkin-tools python3-rosinstall-generator python3-osrf-pycommon -y
@@ -53,8 +60,8 @@ rosdep install --from-paths src --ignore-src -y
 #./install_geographiclib_datasets.sh
 #echo "install_geographiclib_datasets.sh "
 # 5. Install GeographicLib datasets:
-chmod +x src/mavros/mavros/scripts/install_geographiclib_datasets.sh
-./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
+sudo chmod +x src/mavros/mavros/scripts/install_geographiclib_datasets.sh
+sudo ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
 
 # 6. Build source
 catkin build
