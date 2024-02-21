@@ -4,8 +4,14 @@ echo "╔═╗╔╦╗╔═╗╦╔═╔═╗  ╦┌┐┌┌─┐┌┬
 echo "║  ║║║╠═╣╠╩╗║╣   ║│││└─┐ │ ├─┤│  │  ├─┤ │ ││ ││││  └─┐ │ ├─┤├┬┘ │   ";
 echo "╚═╝╩ ╩╩ ╩╩ ╩╚═╝  ╩┘└┘└─┘ ┴ ┴ ┴┴─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘  └─┘ ┴ ┴ ┴┴└─ ┴   ";
 
-apt-get update \
-  && apt-get -y install build-essential \
+sudo ()
+{
+[[ $EUID = 0 ]] || set -- command sudo "$@"
+"$@"
+}
+
+sudo apt-get update \
+  && sudo apt-get -y install build-essential \
   && apt-get install -y wget \
   && rm -rf /var/lib/apt/lists/*
 
