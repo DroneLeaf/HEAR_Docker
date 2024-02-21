@@ -5,13 +5,14 @@
 `HEAR-CLI` is a management tool designed to help droneleafers in daily development tasks , by gathering and execute all repeated HEAR Commands in a single CLI.
 
 
-
+### Requirements
+Python : V *3.8*
 
 ## Install `hear-cli`
  Version: *1.0.0*
 
 >> we can install `hear-cli` via `pip` as a python package
-```bash
+```python
 cd ~/HEAR_Docker
 sudo apt install python3-pip -y
 pip install --user hear-cli/hear_cli-1.0.0.tar.gz
