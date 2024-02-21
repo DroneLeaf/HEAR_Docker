@@ -13,7 +13,7 @@
 >> we can install `hear-cli` via `pip` as a python package
 ```bash
 cd ~/HEAR_Docker
-
+sudo apt install python3-pip -y
 pip install --user hear-cli/hear_cli.whl
 ```
 
