@@ -13,8 +13,8 @@ sudo ()
 
 ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /etc/timezone
 
-sudo apt update && apt -y install build-essential git curl unzip tar zip
-sudo apt update && apt -y install ninja-build
+sudo apt update && sudo  apt -y install build-essential git curl unzip tar zip
+sudo apt update && sudo  apt -y install ninja-build
 
 sudo apt-get install autoconf-archive -y
 
