@@ -12,7 +12,7 @@ sudo ()
 
 sudo apt-get update \
   && sudo apt-get -y install build-essential \
-  && apt-get install -y wget \
+  && sudo apt-get install -y wget \
   && rm -rf /var/lib/apt/lists/*
 
 wget  https://github.com/Kitware/CMake/releases/download/v3.24.1/cmake-3.24.1-Linux-$1.sh \
