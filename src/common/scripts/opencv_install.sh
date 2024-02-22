@@ -49,5 +49,5 @@ curl -Lo opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip && \
                   -D BUILD_opencv_python3=NO \
                   -D OPENCV_GENERATE_PKGCONFIG=ON .. && \
             make -j $(nproc --all) && \
-            make preinstall && make install && ldconfig && \
-            cd / && rm -rf opencv*
+            sudo make preinstall && sudo make install && sudo ldconfig && \
+            cd ../.. && rm -rf opencv_contrib-4.0.0 opencv-4.0.0
