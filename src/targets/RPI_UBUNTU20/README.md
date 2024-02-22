@@ -41,7 +41,7 @@ sudo chmod -R +x src/targets/RPI_UBUNTU20
 
 cd src/targets/RPI_UBUNTU20
 
-sudo ./full_system_installation.sh
+./full_system_installation.sh
 
 
 ```
