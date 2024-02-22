@@ -46,7 +46,7 @@ sudo chmod -R +x src/targets/ORIN_UBUNTU20
 
 cd src/targets/ORIN_UBUNTU20
 
-sudo ./full_system_installation.sh
+./full_system_installation.sh
 
 
 
