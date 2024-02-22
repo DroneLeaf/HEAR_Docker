@@ -31,9 +31,10 @@ patch -f qt-everywhere-src-5.15.2/qtbase/src/network/access/qnetworkreplyhttpimp
 rm patch.zip 0807f16.diff
 mkdir build
 cd build
-../qt-everywhere-src-5.15.2/configure -v -static -opensource -confirm-license -release -reduce-exports -skip qtwebengine -no-feature-geoservices_mapboxgl -qt-pcre -no-pch -evdev -system-freetype -fontconfig -glib -qpa eglfs -nomake examples -no-compile-examples -ssl -prefix /opt/Qt5.15
-make -j$(nproc)
-make install
+
+sudo ../qt-everywhere-src-5.15.2/configure -v -static -opensource -confirm-license -release -reduce-exports -skip qtwebengine -no-feature-geoservices_mapboxgl -qt-pcre -no-pch -evdev -system-freetype -fontconfig -glib -qpa eglfs -nomake examples -no-compile-examples -ssl -prefix /opt/Qt5.15
+sudo make -j$(nproc)
+sudo make install
 cd ..
-rm -rf build/
-rm -rf qt-everywhere-src-5.15.2
+sudo rm -rf build/
+sudo rm -rf qt-everywhere-src-5.15.2

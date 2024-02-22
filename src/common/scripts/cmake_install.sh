@@ -15,10 +15,13 @@ sudo apt-get update \
   && sudo apt-get install -y wget \
   && rm -rf /var/lib/apt/lists/*
 
-wget  https://github.com/Kitware/CMake/releases/download/v3.24.1/cmake-3.24.1-Linux-$1.sh \
-      -q -O /tmp/cmake-install.sh \
-      && sudo chmod u+x /tmp/cmake-install.sh \
-      && sudo mkdir /opt/cmake-3.24.1 \
-      && sudo /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-3.24.1 \
-      && sudo rm /tmp/cmake-install.sh \
+sudo wget https://github.com/Kitware/CMake/releases/download/v3.24.1/cmake-3.24.1-Linux-$1.sh \
+       -O ~/cmake-install_3.24.1.sh \
+      && sudo chmod u+x ~/cmake-install_3.24.1.sh \
+      && sudo mkdir -p /opt/cmake-3.24.1 \
+      && sudo ~/cmake-install_3.24.1.sh --skip-license --prefix=/opt/cmake-3.24.1 \
+      && sudo rm ~/cmake-install_3.24.1.sh \
       && sudo ln -s /opt/cmake-3.24.1/bin/* /usr/local/bin
+
+
+cmake --version
