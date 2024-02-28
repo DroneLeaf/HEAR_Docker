@@ -52,7 +52,22 @@ hear-cli upload
 ```
 
 # 2- fleet
-Remotly access to all `hear_configurtions drones` and download cross-compiled files, update ROS_MASTER_URI, and update drone_name launch arg  on all `hear_configurtions drones`
+Access to all `HEAR_Configurtions` fleet drones. `HEAR_Configurtions` is pulled from GitHub `devel` branch. For each drone in the fleet the command will download cross-compiled files, update ROS_MASTER_URI based on user input, and update drone_name launch arg on all drones in the fleet.
+
+Add all hosts to /etc/hosts
+Change hostname in targets to be the instance name | hear-cli fleet update-host-names
+
+
+Name property in each launch file| Example: 
+<arg name="DRONE_NAME" /> 
+<node name="$(arg DRONE_NAME)" pkg="flight_controller" type="window_node"  output="screen"/>
+
+Ros bag record
+
+hear-cli fleet setup
+
+hear-cli fleet run --filename 
+`filename will be user prompt` | note: from HEAR_Run
 
 **Execution path** :
 
@@ -66,7 +81,7 @@ hear-cli fleet
 ```
 
 # 3- dev 
-Build HEAR_FC or HEAR_MC for a choosen target
+Build HEAR_FC or HEAR_MC for a choosen target. Type `hear-cli dev --help` 
 
  - dev
    - build
@@ -74,13 +89,14 @@ Build HEAR_FC or HEAR_MC for a choosen target
 
 **Execution path** :
 
-- HEAR_FC or HEAR_MC workspaces paths
+- Command must be run from HEAR_FC or HEAR_MC workspaces paths
 
 
-**Usage**
+**Example Usage**
 
 Build hear_mc or hear_fc projects with a choosen target
 ```bash
+cd ~/HEAR_FC
 hear-cli dev build
 ```
 
