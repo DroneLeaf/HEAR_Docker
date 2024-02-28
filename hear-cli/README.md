@@ -7,6 +7,7 @@
 
 ### Requirements
 Python : V *3.8*
+Docker
 
 ## Install `hear-cli`
  Version: *1.0.0*
