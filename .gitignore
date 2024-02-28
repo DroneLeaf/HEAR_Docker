@@ -31,3 +31,4 @@ src/core/utils/hear_cli_old.py
 HEAR_CLI
 /venv/
 config.json
+src/common/scripts/install_geographiclib_datasets.sh.1
