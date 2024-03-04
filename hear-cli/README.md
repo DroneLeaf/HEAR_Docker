@@ -16,7 +16,7 @@ Docker
 ```python
 cd ~/HEAR_Docker
 sudo apt install python3-pip -y
-pip install --user hear-cli/hear_cli-1.0.0.tar.gz
+pip install --user hear-cli/hear_cli-1.1.0.tar.gz
 
 # open new terminal and execute `hear-cli`
 ```

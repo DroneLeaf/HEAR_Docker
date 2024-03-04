@@ -32,3 +32,4 @@ HEAR_CLI
 /venv/
 config.json
 src/common/scripts/install_geographiclib_datasets.sh.1
+HEAR_Docker.zip
