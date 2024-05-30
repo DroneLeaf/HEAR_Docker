@@ -148,6 +148,7 @@ RUN chmod +x scripts/Qgroundcontrol_install.sh
 RUN if [ "$TARGET_ORIN" = "ON" ]; then\
      # run your sh file here 👇👇
      # ./scripts/Qgroundcontrol_install.sh; \
+    ./scripts/Kalibr.sh; \
     echo "TARGET_ORIN Applied";\
     #
   fi;
@@ -235,8 +236,8 @@ RUN bash -c "echo source /home/$USERNAME/$WS_NAME/devel/setup.bash >> '/root/.ba
 RUN bash -c "source /root/.bashrc"
 
 # remove git credentials
-# RUN rm -f ~/.gitconfig
-# ARG GITHUB_TOKEN=""
+RUN rm -f ~/.gitconfig
+ARG GITHUB_TOKEN=""
 
 
 ADD /src/core/docker/entrypoint.sh /
