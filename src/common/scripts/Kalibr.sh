@@ -1,5 +1,11 @@
 #!/bin/bash
 
+sudo ()
+{
+[[ $EUID = 0 ]] || set -- command sudo "$@"
+"$@"
+}
+
 sudo apt-get install -y \
         git wget autoconf automake nano \
         libeigen3-dev libboost-all-dev libsuitesparse-dev \

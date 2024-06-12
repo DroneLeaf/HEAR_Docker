@@ -19,7 +19,8 @@ sudo apt update && sudo  apt -y install ninja-build
 sudo apt-get install autoconf-archive -y
 
 
-git clone https://github.com/Microsoft/vcpkg.git ~/vcpkg
+# git clone https://github.com/Microsoft/vcpkg.git ~/vcpkg
+git clone --depth 1 --branch 2023.02.24 https://github.com/Microsoft/vcpkg.git ~/vcpkg
 
 cd ~/vcpkg
 
@@ -27,6 +28,7 @@ export VCPKG_FORCE_SYSTEM_BINARIES=1
 export VCPKG_FORCE_SYSTEM_BINARIES=1 &&./bootstrap-vcpkg.sh -disableMetrics
 
 
+ cd ~/vcpkg && VCPKG_FORCE_SYSTEM_BINARIES=1 ./vcpkg install linux-headers
  cd ~/vcpkg && VCPKG_FORCE_SYSTEM_BINARIES=1 ./vcpkg install cpr
  cd ~/vcpkg && VCPKG_FORCE_SYSTEM_BINARIES=1 ./vcpkg install rapidjson
  cd ~/vcpkg && VCPKG_FORCE_SYSTEM_BINARIES=1 ./vcpkg install boost-Context
