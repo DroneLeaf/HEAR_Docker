@@ -288,8 +288,19 @@ RUN if [ "$WS_NAME" = "HEAR_MC" ] && [  "$IS_PRODUCTION" = "TRUE" ]; then\
     #
   fi;
 
-RUN rm  -rf /scripts
-RUN rm  -rf /home/$USERNAME/scripts
+
+
+## remove scripts folder in production mode
+RUN if [ "$IS_PRODUCTION" = "TRUE" ]; then\
+    #
+    rm  -rf /scripts; \
+    rm  -rf /home/$USERNAME/scripts; \
+    #
+  fi;
+
+
+
+
 # RUN cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME
 
 
@@ -302,9 +313,14 @@ RUN bash -c "source /home/$USERNAME/$WS_NAME/devel/setup.bash"
 RUN bash -c "echo source /home/$USERNAME/$WS_NAME/devel/setup.bash >> '/root/.bashrc'"
 RUN bash -c "source /root/.bashrc"
 
-# remove git credentials
-RUN rm -f ~/.gitconfig
-ARG GITHUB_TOKEN=""
+
+# remove git credentials in production mode
+RUN if [ "$IS_PRODUCTION" = "TRUE" ]; then\
+    #
+    rm -f ~/.gitconfig; \
+    #
+  fi;
+RUN 
 
 
 FROM base
