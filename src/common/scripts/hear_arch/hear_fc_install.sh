@@ -23,10 +23,10 @@ cd HEAR_FC && git submodule update --init --recursive
 
 # return to workspace and build
 cd $4
-catkin_make clean -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2
+catkin_make clean -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2 -DTARGET_ORIN=$3
 
 #RUN bash -c "cd /HEAR_FC &&cp -r /HEAR_FC/mavros_msgs /HEAR_FC/devel/include"
-catkin_make clean -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2
+catkin_make clean -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2 -DTARGET_ORIN=$3
 catkin_make -DCMAKE_BUILD_TYPE=Debug -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2 -DTARGET_ORIN=$3 -Wno-dev
 cd
 #RUN touch /home/pi/.bashrc
