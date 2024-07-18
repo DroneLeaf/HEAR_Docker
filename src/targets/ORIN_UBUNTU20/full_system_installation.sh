@@ -17,6 +17,7 @@ chmod +x ../../../src/common/scripts/dependencies_install.sh
 chmod +x ../../../src/common/scripts/px4/mavros_install.sh
 chmod +x ../../../src/common/scripts/px4/mavlink_install.sh
 chmod +x ../../../src/common/scripts/Qgroundcontrol_install.sh
+chmod +x ../../../src/common/scripts/netplan-init-eth-netcfg.sh
 
 ../../../src/common/scripts/base.sh
 ../../../src/common/scripts/cmake_install.sh aarch64
@@ -28,3 +29,4 @@ chmod +x ../../../src/common/scripts/Qgroundcontrol_install.sh
 ../../../src/common/scripts/px4/mavros_install.sh
 ../../../src/common/scripts/px4/mavlink_install.sh
 ../../../src/common/scripts/Qgroundcontrol_install.sh
+../../../src/common/scripts/netplan-init-eth-netcfg.sh
