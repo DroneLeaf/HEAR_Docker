@@ -12,16 +12,20 @@ you can generate one as described [here](https://docs.github.com/en/authenticati
 ```bash 
 cd ~/HEAR_Docker
 
+echo {GITHUB_ID_HERE} > secrets/GITHUB_ID
+echo {GITHUB_TOKEN_HERE} > secrets/GITHUB_TOKEN
+
 docker build \
 --platform=linux/arm64 \
 --progress=plain \
---build-arg GITHUB_ID="{ID_HERE}" \
---build-arg GITHUB_TOKEN="{TOKEN_HERE}" \
+--secret id=GITHUB_ID,src=secrets/GITHUB_ID \
+--secret id=GITHUB_TOKEN,src=secrets/GITHUB_TOKEN \
 --build-arg TARGET_ORIN="ON" \
 --build-arg opencv_url="geohashim/opencv:4.0.0" \
 --build-arg qt_url="geohashim/qt" \
 --build-arg USERNAME="{username}" \
 --build-arg WS_NAME="HEAR_FC" \
+--build-arg IS_PRODUCTION="FALSE" \
 -t fc_orin \
 .
 
@@ -33,6 +37,7 @@ docker build \
 docker run -it -d fc_orin --entrypoint bash
 
 # docker run -it -d fc_orin "/home/{username}/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
+# docker run -it -d fc_orin "/home/{username}/HEAR_FC"  "roslaunch flight_controller PX4_SITL.launch DRONE_NAME:=UAV"
 
 
 ```
@@ -134,3 +139,21 @@ docker pull 296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest
 docker tag  296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest fc_orin:latest
 
 ```
+
+
+# get prebuilded docker image from aws as a droneleaf client
+
+```bash
+sudo apt  install awscli -y
+
+aws configure set aws_access_key_id "AKIAUJ6SOV74BIPDJCHB" --profile ecrpull && aws configure set aws_secret_access_key "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" --profile ecrpull && aws configure set region "me-south-1" --profile ecrpull
+
+aws ecr get-login-password --region me-south-1 --profile ecrpull | docker login --username AWS --password-stdin 296257236984.dkr.ecr.me-south-1.amazonaws.com
+
+docker pull 296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest
+
+docker tag  296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest fc_orin:latest
+
+```
+
+
