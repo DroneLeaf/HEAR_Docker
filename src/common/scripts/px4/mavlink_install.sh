@@ -55,6 +55,7 @@ pip3 install future
 mkdir -p ~/catkin_ws_offboard_testing/src
 cd ~/catkin_ws_offboard_testing/src
 echo " clone offboard_testing.git"
+rm -rf offboard_testing
 git clone https://github.com/Mu99-M/offboard_testing.git --recursive
 cd ..
 sudo ./src/offboard_testing/mavros/mavros/scripts/install_geographiclib_datasets.sh  # Install GeographicLib datasets
