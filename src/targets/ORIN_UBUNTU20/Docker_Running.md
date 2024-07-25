@@ -90,6 +90,12 @@ python3 src/core/utils/s3Upload.py \
 - Download file on other machine
 
 ```bash
+
+aws configure set aws_access_key_id "AKIAUJ6SOV74EPNOMEGF" --profile s3download && aws configure set aws_secret_access_key "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" --profile s3download && aws configure set region "me-south-1" --profile s3download
+
+
+aws s3api get-object --bucket hear-bucket --key hear_arch/hear_fc_devel.zip hear_fc_devel.zip --profile s3download
+
 wget https://hear-bucket.s3.me-south-1.amazonaws.com/hear_arch/hear_fc_devel.zip 
 
 unzip hear_fc_devel.zip -d compiled_files

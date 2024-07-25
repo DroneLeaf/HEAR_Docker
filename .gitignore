@@ -35,3 +35,4 @@ src/common/scripts/install_geographiclib_datasets.sh.1
 HEAR_Docker.zip
 src/CMakeLists.txt
 secrets
+outfile.zip
