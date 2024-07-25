@@ -8,6 +8,7 @@ echo "╚  └─┘┴─┘┴─┘  └─┘ ┴ └─┘ ┴ └─┘┴
 
 
 
+chmod +x ../../../src/common/scripts/extend_sudo_timeout.sh
 chmod +x ../../../src/common/scripts/base.sh
 chmod +x ../../../src/common/scripts/cmake_install.sh
 chmod +x ../../../src/common/scripts/vcpkg_install.sh
@@ -15,8 +16,10 @@ chmod +x ../../../src/common/scripts/vcpkg_install.sh
 chmod +x ../../../src/common/scripts/ros_install.sh
 chmod +x ../../../src/common/scripts/dependencies_install.sh
 chmod +x ../../../src/common/scripts/px4/mavros_install.sh
-chmod +x ../../../src/common/scripts/px4/netplan-init-eth-netcfg.sh
+chmod +x ../../../src/common/scripts/netplan-init-eth-netcfg.sh
+chmod +x ../../../src/common/scripts/droneleaf_cli_prerequisites.sh
 
+../../../src/common/scripts/extend_sudo_timeout.sh
 ../../../src/common/scripts/base.sh
 ../../../src/common/scripts/cmake_install.sh aarch64
 
@@ -25,4 +28,5 @@ chmod +x ../../../src/common/scripts/px4/netplan-init-eth-netcfg.sh
 ../../../src/common/scripts/ros_install.sh
 ../../../src/common/scripts/dependencies_install.sh
 ../../../src/common/scripts/px4/mavros_install.sh
-../../../src/common/scripts/px4/netplan-init-eth-netcfg.sh
+../../../src/common/scripts/netplan-init-eth-netcfg.sh
+../../../src/common/scripts/droneleaf_cli_prerequisites.sh
