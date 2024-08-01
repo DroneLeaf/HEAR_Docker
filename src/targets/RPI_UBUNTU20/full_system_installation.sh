@@ -19,7 +19,7 @@ chmod +x ../../../src/common/scripts/px4/mavros_install.sh
 chmod +x ../../../src/common/scripts/netplan-init-eth-netcfg.sh
 chmod +x ../../../src/common/scripts/droneleaf_cli_prerequisites.sh
 
-../../../src/common/scripts/extend_sudo_timeout.sh
+sudo ../../../src/common/scripts/extend_sudo_timeout.sh
 ../../../src/common/scripts/base.sh
 ../../../src/common/scripts/cmake_install.sh aarch64
 

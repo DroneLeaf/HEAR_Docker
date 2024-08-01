@@ -18,7 +18,7 @@ chmod +x ../../../src/common/scripts/dependencies_install.sh
 chmod +x ../../../src/common/scripts/px4/mavros_install.sh
 chmod +x ../../../src/common/scripts/px4/mavlink_install.sh
 
-../../../src/common/scripts/extend_sudo_timeout.sh
+sudo ../../../src/common/scripts/extend_sudo_timeout.sh
 ../../../src/common/scripts/base.sh
 ../../../src/common/scripts/cmake_install.sh x86_64
 
