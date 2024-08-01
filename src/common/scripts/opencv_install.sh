@@ -20,6 +20,9 @@ sudo apt-get update && sudo apt-get install -y --no-install-recommends \
             rm -rf /var/lib/apt/lists/*
 
 
+
+suddo rm -rf opencv_contrib-4.0.0 opencv-4.0.0
+
 curl -Lo opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip && \
             unzip -q opencv.zip && \
             curl -Lo opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.0.0.zip && \
