@@ -9,6 +9,8 @@ echo "╚  └─┘┴─┘┴─┘  └─┘ ┴ └─┘ ┴ └─┘┴
 
 
 chmod +x ../../../src/common/scripts/extend_sudo_timeout.sh
+chmod +x ../../../src/common/scripts/runtime/source_ros.sh
+
 chmod +x ../../../src/common/scripts/base.sh
 chmod +x ../../../src/common/scripts/cmake_install.sh
 chmod +x ../../../src/common/scripts/vcpkg_install.sh
@@ -19,6 +21,9 @@ chmod +x ../../../src/common/scripts/px4/mavros_install.sh
 chmod +x ../../../src/common/scripts/px4/mavlink_install.sh
 
 sudo ../../../src/common/scripts/extend_sudo_timeout.sh
+../../../src/common/scripts/runtime/source_ros.sh
+
+
 ../../../src/common/scripts/base.sh
 ../../../src/common/scripts/cmake_install.sh x86_64
 
