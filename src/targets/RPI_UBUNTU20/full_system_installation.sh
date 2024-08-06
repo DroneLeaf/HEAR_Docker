@@ -9,6 +9,9 @@ echo "╚  └─┘┴─┘┴─┘  └─┘ ┴ └─┘ ┴ └─┘┴
 
 
 chmod +x ../../../src/common/scripts/extend_sudo_timeout.sh
+chmod +x ../../../src/common/scripts/runtime/source_ros.sh
+
+
 chmod +x ../../../src/common/scripts/base.sh
 chmod +x ../../../src/common/scripts/cmake_install.sh
 chmod +x ../../../src/common/scripts/vcpkg_install.sh
@@ -20,6 +23,9 @@ chmod +x ../../../src/common/scripts/netplan-init-eth-netcfg.sh
 chmod +x ../../../src/common/scripts/droneleaf_cli_prerequisites.sh
 
 sudo ../../../src/common/scripts/extend_sudo_timeout.sh
+../../../src/common/scripts/runtime/source_ros.sh
+
+
 ../../../src/common/scripts/base.sh
 ../../../src/common/scripts/cmake_install.sh aarch64
 
