@@ -15,4 +15,5 @@ sudo apt update && sudo apt install python3 -y && sudo apt install python3-pip -
 sudo apt install python3-pip -y
 pip3 install  awscli
 sudo apt-get install expect -y
+sudo apt-get install net-tools -y
 sudo apt update -y
