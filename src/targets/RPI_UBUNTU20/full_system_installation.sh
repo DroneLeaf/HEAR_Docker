@@ -9,6 +9,7 @@ echo "╚  └─┘┴─┘┴─┘  └─┘ ┴ └─┘ ┴ └─┘┴
 
 
 chmod +x ../../../src/common/scripts/extend_sudo_timeout.sh
+chmod +x ../../../src/common/scripts/ssh_connection_timeout_changer.sh
 chmod +x ../../../src/common/scripts/runtime/source_ros.sh
 
 
@@ -23,6 +24,7 @@ chmod +x ../../../src/common/scripts/netplan-init-eth-netcfg.sh
 chmod +x ../../../src/common/scripts/droneleaf_cli_prerequisites.sh
 
 sudo ../../../src/common/scripts/extend_sudo_timeout.sh
+sudo ../../../src/common/scripts/ssh_connection_timeout_changer.sh
 ../../../src/common/scripts/runtime/source_ros.sh
 
 
