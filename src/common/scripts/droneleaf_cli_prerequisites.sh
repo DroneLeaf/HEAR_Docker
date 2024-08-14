@@ -16,4 +16,5 @@ sudo apt install python3-pip -y
 pip3 install  awscli
 sudo apt-get install expect -y
 sudo apt-get install net-tools -y
+sudo apt-get install tmux -y
 sudo apt update -y
