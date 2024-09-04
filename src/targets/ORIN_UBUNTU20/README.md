@@ -39,7 +39,7 @@
 ```bash
 cd
 
-git clone https://github.com/ahmed-hashim-pro/HEAR_Docker
+git clone https://github.com/DroneLeaf/HEAR_Docker
 
 cd HEAR_Docker
 sudo chmod -R +x src/targets/ORIN_UBUNTU20

@@ -57,7 +57,7 @@ docker buildx ls # you should see linux/arm64 arch
 3. ### Clone Hear_Docker Repo at home directory
 ```bash
 cd
-git clone https://github.com/ahmed-hashim-pro/HEAR_Docker.git
+git clone https://github.com/DroneLeaf/HEAR_Docker.git
 ```
 
 
