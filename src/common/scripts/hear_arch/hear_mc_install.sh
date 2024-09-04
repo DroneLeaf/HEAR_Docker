@@ -20,16 +20,17 @@ mkdir -p $4/src
 cd $4/src
 git clone -b  devel --recursive https://github.com/HazemElrefaei/HEAR_MC.git HEAR_MC
 cd HEAR_MC && git submodule update --init --recursive
+git clone https://github.com/DroneLeaf/HEAR_Msgs.git 
 
 # return to workspace and build
 cd $4
-catkin_make clean -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2 -DTARGET_ORIN=$3
+catkin_make clean -DHEAR_TARGET=$6
 
 #RUN bash -c "cd /HEAR_MC &&cp -r /HEAR_MC/mavros_msgs /HEAR_MC/devel/include"
 
 
-catkin_make clean -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2 -DTARGET_ORIN=$3
-catkin_make -DCMAKE_BUILD_TYPE=Debug -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2 -DTARGET_ORIN=$3 -Wno-dev -j 8
+catkin_make clean -DHEAR_TARGET=$6
+catkin_make -DCMAKE_BUILD_TYPE=Debug -DHEAR_TARGET=$6 -Wno-dev
 cd
 #RUN touch /home/pi/.bashrc
 
