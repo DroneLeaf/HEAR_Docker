@@ -233,11 +233,26 @@ RUN if [  "$IS_PRODUCTION" = "TRUE" ]; then\
 
 ADD /src/common/scripts/hear_arch/hear_fc_install.sh /home/$USERNAME/scripts/hear_fc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_fc_install.sh
-RUN if [ "$WS_NAME" = "HEAR_FC" ]; then\
+RUN if [ "$WS_NAME" = "HEAR_FC" ] && [ "$TARGET_ORIN" = "ON" ]; then\
     #
-    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME; \
+    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "ORIN"; \
     #
   fi;
+
+RUN if [ "$WS_NAME" = "HEAR_FC" ] && [ "$TARGET_RPI" = "ON" ]; then\
+    #
+    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "RPI"; \
+    #
+  fi;
+
+
+RUN if [ "$WS_NAME" = "HEAR_FC" ] && [ "$TARGET_UBUNTU" = "ON" ]; then\
+    #
+    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "SITL"; \
+    #
+  fi;
+
+
 
 RUN if [ "$WS_NAME" = "HEAR_FC" ] && [  "$IS_PRODUCTION" = "TRUE" ]; then\
     #
@@ -260,9 +275,22 @@ RUN if [ "$WS_NAME" = "HEAR_FC" ] && [  "$IS_PRODUCTION" = "TRUE" ]; then\
 
 ADD /src/common/scripts/hear_arch/hear_mc_install.sh /home/$USERNAME/scripts/hear_mc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_mc_install.sh
-RUN if [ "$WS_NAME" = "HEAR_MC" ]; then\
+RUN if [ "$WS_NAME" = "HEAR_MC" ] && [ "$TARGET_ORIN" = "ON" ]; then\
     #
-    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME; \
+    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "ORIN"; \
+    #
+  fi;
+
+RUN if [ "$WS_NAME" = "HEAR_MC" ] && [ "$TARGET_RPI" = "ON" ]; then\
+    #
+    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "RPI"; \
+    #
+  fi;
+
+
+RUN if [ "$WS_NAME" = "HEAR_MC" ] && [ "$TARGET_UBUNTU" = "ON" ]; then\
+    #
+    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "SITL"; \
     #
   fi;
 
