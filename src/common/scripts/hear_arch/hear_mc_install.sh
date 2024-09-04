@@ -18,7 +18,7 @@ source /opt/ros/noetic/setup.bash
 # create workspace
 mkdir -p $4/src
 cd $4/src
-git clone -b  devel --recursive https://github.com/HazemElrefaei/HEAR_MC.git HEAR_MC
+git clone -b  devel --recursive https://github.com/DroneLeaf/HEAR_MC.git HEAR_MC
 cd HEAR_MC && git submodule update --init --recursive
 git clone https://github.com/DroneLeaf/HEAR_Msgs.git 
 
