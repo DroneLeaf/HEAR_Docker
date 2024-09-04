@@ -4,15 +4,24 @@ echo "╔═╗╔═╗╔═╗╔╗╔╔═╗╦  ╦  ╦┌┐┌┌─�
 echo "║ ║╠═╝║╣ ║║║║  ╚╗╔╝  ║│││└─┐ │ ├─┤│  │  ├─┤ │ ││ ││││  └─┐ │ ├─┤├┬┘ │   ";
 echo "╚═╝╩  ╚═╝╝╚╝╚═╝ ╚╝   ╩┘└┘└─┘ ┴ ┴ ┴┴─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘  └─┘ ┴ ┴ ┴┴└─ ┴   ";
 
+sudo ()
+{
+[[ $EUID = 0 ]] || set -- command sudo "$@"
+"$@"
+}
+
 ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /etc/timezone
 
-apt-get update && apt-get install -y --no-install-recommends \
+sudo apt-get update && sudo apt-get install -y --no-install-recommends \
             tzdata git build-essential cmake pkg-config wget unzip libgtk2.0-dev \
             curl ca-certificates libcurl4-openssl-dev libssl-dev \
             libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev \
             libjpeg-turbo8-dev libpng-dev libtiff-dev libdc1394-22-dev nasm && \
             rm -rf /var/lib/apt/lists/*
 
+
+
+sudo rm -rf opencv_contrib-4.0.0 opencv-4.0.0
 
 curl -Lo opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip && \
             unzip -q opencv.zip && \
@@ -43,5 +52,5 @@ curl -Lo opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip && \
                   -D BUILD_opencv_python3=NO \
                   -D OPENCV_GENERATE_PKGCONFIG=ON .. && \
             make -j $(nproc --all) && \
-            make preinstall && make install && ldconfig && \
-            cd / && rm -rf opencv*
+            sudo make preinstall && sudo make install && sudo ldconfig && \
+            cd ../.. && rm -rf opencv_contrib-4.0.0 opencv-4.0.0

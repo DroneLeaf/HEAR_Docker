@@ -41,7 +41,7 @@ sudo chmod -R +x src/targets/RPI_UBUNTU20
 
 cd src/targets/RPI_UBUNTU20
 
-sudo ./full_system_installation.sh
+./full_system_installation.sh
 
 
 ```
@@ -114,3 +114,39 @@ For example, if your old hostname was "raspberrypi" and your new hostname is "my
 ```bash
 sudo reboot
 ```
+
+# Available PreBuilt images:
+
+>>Just upload the image inside target directory and grab the download link
+
+>> ⚠️⚠️  DEVELOPMENT upload directory\
+**RPI_UBUNTU20**
+https://droneleaf.sharepoint.com/:f:/s/technical/Epcvs8djDgBBmDXRLSfzWqwBDuH-a8uszOdTgNiNsdsTeQ?e=aLNODQ
+
+
+
+- **DEVELOPMENT**
+
+| Author   |      Date      |  LINK |
+|----------|:-------------:|:------:|
+| developer name |  7/JAN/2024 | https://test.com |
+
+<br>
+ 
+---
+<br>
+
+
+
+
+>> ⚠️⚠️  PRODUCTION upload directory\
+**RPI_UBUNTU20**
+https://droneleaf.sharepoint.com/:f:/s/technical/ErfDGvngD4NGpYUM4kqV0pcBgpX_CMDXZwGzjy3LMAr-rw?e=xcnotr
+
+
+- **PRODUCTION**    
+
+
+| Author   |      Date      |  LINK |
+|----------|:-------------:|:------:|
+| developer name |  7/JAN/2024 | https://test.com |

@@ -1,20 +1,33 @@
 #!/bin/bash
- 
+
+# Source mavlink
+ if [ -f ~/catkin_ws/devel/setup.bash ]
+then
+  source ~/catkin_ws/devel/setup.bash
+  echo source ~/catkin_ws/devel/setup.bash >> '/root/.bashrc'
+fi
+
 # Source ROS and Catkin workspaces
 source /opt/ros/noetic/setup.bash
-# sudo echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-# source ~/.bashrc
-#source ~/catkin_ws/devel/setup.bash
-source $1/devel/setup.bash
-# sudo echo "source $1/devel/setup.bash" >> ~/.bashrc
-# source ~/.bashrc
-# if [ -f $2/devel/setup.bash ]
-# then
-#   source $2/devel/setup.bash
-# fi
 
-echo "start Catkin workspace!"
-#roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV
+if [ -z "$1" ]
+  then
+    echo "No argument supplied"
+  
+  else
+    # Source workspace 
+    source $1/devel/setup.bash
+fi
+
+
+# Source QT 
+if [ -d "/opt/Qt5.15/bin" ]
+then
+  export PATH=/opt/Qt5.15/bin:$PATH
+  echo $(qmake --version)
+fi
+
+echo "start Running Docker Workspace!"
  
 # Set environment variables
 #export TURTLEBOT3_MODEL=waffle_pi
@@ -25,6 +38,15 @@ echo "start Catkin workspace!"
 # else
 # roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV
 # fi
-echo "$2"
-$2
+
+if [ -z "$2" ]
+  then
+    bash
+  else
+# Source workspace 
+    echo "$2"
+    $2
+fi
+
+
 # Execute the command passed into this entrypoint
