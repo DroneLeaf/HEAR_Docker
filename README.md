@@ -1,6 +1,17 @@
 # HEAR Docker Getting Started Guide
 
 
+# ⚠️⚠️💡📌📌`HEAR_CLI`: is an alternative way to execute most of HEAR_Docker commands is launched under the name of `hear-cli`
+
+It is recommended to to use `hear-cli` instead of HEAR_Docker, however it is up to you any way 
+
+ 📌 `hear-cli` Documintations [here](hear-cli/README.md)
+
+
+---
+
+
+# HEAR Docker
 # **Good To Know**
 
 ### Expressions

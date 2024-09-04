@@ -1,4 +1,4 @@
-# Raspberry Pi Ubuntu Server 20.04 Docker Running
+# Jetson Orin Ubuntu Server 20.04 Docker Running
 
 ## BUILD AND RUN
 
@@ -12,16 +12,20 @@ you can generate one as described [here](https://docs.github.com/en/authenticati
 ```bash 
 cd ~/HEAR_Docker
 
+echo {GITHUB_ID_HERE} > secrets/GITHUB_ID
+echo {GITHUB_TOKEN_HERE} > secrets/GITHUB_TOKEN
+
 docker build \
 --platform=linux/arm64 \
 --progress=plain \
---build-arg GITHUB_ID="{ID_HERE}" \
---build-arg GITHUB_TOKEN="{TOKEN_HERE}" \
+--secret id=GITHUB_ID,src=secrets/GITHUB_ID \
+--secret id=GITHUB_TOKEN,src=secrets/GITHUB_TOKEN \
 --build-arg TARGET_ORIN="ON" \
---build-arg opencv_url="cyrilix/opencv-runtime:4.8.0" \
+--build-arg opencv_url="geohashim/opencv:4.0.0" \
+--build-arg qt_url="geohashim/qt" \
 --build-arg USERNAME="{username}" \
 --build-arg WS_NAME="HEAR_FC" \
-
+--build-arg IS_PRODUCTION="FALSE" \
 -t fc_orin \
 .
 
@@ -30,7 +34,12 @@ docker build \
 - ### How To Run The Docker Image
 
 ```bash 
-docker run -it -d fc_orin "/home/{username}/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
+docker run -it -d fc_orin --entrypoint bash
+
+# docker run -it -d fc_orin "/home/{username}/HEAR_FC"  "roslaunch flight_controller flight_controller.launch DRONE_NAME:=UAV"
+# docker run -it -d fc_orin "/home/{username}/HEAR_FC"  "roslaunch flight_controller PX4_SITL.launch DRONE_NAME:=UAV"
+
+
 ```
 
 
@@ -49,7 +58,7 @@ sudo docker cp {CONTAINER ID}:/home/{username}/HEAR_FC src/targets/ORIN_UBUNTU20
 # EX: docker cp 7a349451cdc9:/home/{username}/HEAR_FC src/targets/ORIN_UBUNTU20/compiled_files
 
 # close and remove fc_orin runing container to save machine resources
-sudo docker rm -f {CONTAINER ID}
+# sudo docker rm -f {CONTAINER ID}
 ```
 
 4. Now you can find copied docker image output here >>> ```src/targets/ORIN_UBUNTU20/compiled_files```
@@ -81,6 +90,12 @@ python3 src/core/utils/s3Upload.py \
 - Download file on other machine
 
 ```bash
+
+aws configure set ***HA-REMOVED-BY-HASHIM*** --profile s3download && aws configure set ***HA-REMOVED-BY-HASHIM*** --profile s3download && aws configure set region "me-south-1" --profile s3download
+
+
+aws s3api get-object --bucket hear-bucket --key hear_arch/hear_fc_devel.zip hear_fc_devel.zip --profile s3download
+
 wget https://hear-bucket.s3.me-south-1.amazonaws.com/hear_arch/hear_fc_devel.zip 
 
 unzip hear_fc_devel.zip -d compiled_files
@@ -89,7 +104,7 @@ cp -r  compiled_files/compiled_files ~/HEAR_FC
 
 <br>
 
-# Transfer via ssh to raspberry pi
+# Transfer via ssh to jetson orin
 
 **We can do that In 2 steps, One For Each Device**
 
@@ -99,13 +114,13 @@ cp -r  compiled_files/compiled_files ~/HEAR_FC
 # zip desired folder
 pushd src/targets/ORIN_UBUNTU20; sudo zip -r ../../../hear_fc_devel.zip ./compiled_files; popd
 
-# copy to raspberry pi device
-sudo scp hear_fc_devel.zip pi@{ip}:/home/{username}/hear_fc_devel.zip
+# copy to jetson orin device
+sudo scp hear_fc_devel.zip {deviceName}@{ip}:/home/{username}/hear_fc_devel.zip
 
 
 ```
 
-2- On Raspberry Pi
+2- On Jetson Orin
 
 ``` bash
 
@@ -114,3 +129,37 @@ unzip hear_fc_devel.zip -d compiled_files
 cp -r  compiled_files/compiled_files ~/HEAR_FC
 
 ```
+
+
+# get prebuilded docker image from aws
+
+```bash
+sudo apt  install awscli -y
+
+aws configure set ***HA-REMOVED-BY-HASHIM*** --profile ecrpush && aws configure set ***HA-REMOVED-BY-HASHIM*** --profile ecrpush && aws configure set region "me-south-1" --profile ecrpush
+
+aws ecr get-login-password --region me-south-1 --profile ecrpush | docker login --username AWS --password-stdin 296257236984.dkr.ecr.me-south-1.amazonaws.com
+
+docker pull 296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest
+
+docker tag  296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest fc_orin:latest
+
+```
+
+
+# get prebuilded docker image from aws as a droneleaf client
+
+```bash
+sudo apt  install awscli -y
+
+aws configure set ***HA-REMOVED-BY-HASHIM*** --profile ecrpull && aws configure set ***HA-REMOVED-BY-HASHIM*** --profile ecrpull && aws configure set region "me-south-1" --profile ecrpull
+
+aws ecr get-login-password --region me-south-1 --profile ecrpull | docker login --username AWS --password-stdin 296257236984.dkr.ecr.me-south-1.amazonaws.com
+
+docker pull 296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest
+
+docker tag  296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest fc_orin:latest
+
+```
+
+
