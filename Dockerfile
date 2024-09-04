@@ -191,7 +191,7 @@ WORKDIR /home/$USERNAME/$WS_NAME
 
 #RUN mkdir -p /HEAR_FC/src
 
-# RUN cd /HEAR_FC/src  &&  git clone -b devel https://github.com/DroneLeaf/HEAR_FC.git HEAR_FC
+# RUN cd /HEAR_FC/src  &&  git clone -b main https://github.com/DroneLeaf/HEAR_FC.git HEAR_FC
 # RUN cd /HEAR_FC/src/HEAR_FC && git submodule update --init --recursive
 
 # ARG TARGET_RPI
