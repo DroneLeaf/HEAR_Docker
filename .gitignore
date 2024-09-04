@@ -16,3 +16,5 @@ CMDS
 opencv_build/Dockerfile
 qt_build/Dockerfile
 vcpkg_build/Dockerfile
+secrets/GITHUB_ID
+secrets/GITHUB_TOKEN
