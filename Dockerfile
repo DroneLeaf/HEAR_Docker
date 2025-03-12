@@ -72,6 +72,8 @@ ARG WS_NAME
 ARG TARGET_RPI=OFF
 ARG TARGET_UBUNTU=OFF
 ARG TARGET_ORIN=OFF
+ARG TARGET="ORIN"
+ARG COMPILE_BRANCH="dev"
 # ARG GITHUB_ID
 # ARG GITHUB_TOKEN
 
@@ -125,7 +127,7 @@ RUN ./scripts/mavlink_install.sh
 
 
 # #### target condition execute
-RUN if [ "$TARGET_RPI" = "ON" ]; then\
+RUN if [ "$TARGET" = "RPI" ]; then\
      # run your sh file here 👇👇
      #./scripts/Qgroundcontrol_install.sh; \
      echo "TARGET_RPI Applied";\
@@ -141,7 +143,7 @@ RUN if [ "$TARGET_RPI" = "ON" ]; then\
 
 
 # #### target condition execute
-RUN if [ "$TARGET_SITL" = "ON" ]; then\
+RUN if [ "$TARGET" = "SITL" ]; then\
      # run your sh file here 👇👇
      #./scripts/Qgroundcontrol_install.sh; \
      echo "TARGET_SITL Applied";\
@@ -158,7 +160,7 @@ ADD /src/common/scripts/Qgroundcontrol_install.sh /scripts/Qgroundcontrol_instal
 RUN chmod +x scripts/Qgroundcontrol_install.sh
 
 # #### target condition execute
-RUN if [ "$TARGET_ORIN" = "ON" ]; then\
+RUN if [ "$TARGET" = "ORIN" ]; then\
      # run your sh file here 👇👇
      # ./scripts/Qgroundcontrol_install.sh; \
     ./scripts/Kalibr.sh; \
@@ -191,15 +193,15 @@ WORKDIR /home/$USERNAME/$WS_NAME
 
 #RUN mkdir -p /HEAR_FC/src
 
-# RUN cd /HEAR_FC/src  &&  git clone -b main https://github.com/DroneLeaf/HEAR_FC.git HEAR_FC
+# RUN cd /HEAR_FC/src  &&  git clone -b devel https://github.com/DroneLeaf/HEAR_FC.git HEAR_FC
 # RUN cd /HEAR_FC/src/HEAR_FC && git submodule update --init --recursive
 
 # ARG TARGET_RPI
 # ARG TARGET_UBUNTU
 
-RUN echo "$TARGET_ORIN TARGET_ORIN2 sadsadsaadl kdjsadj sadjasl"
-RUN echo "$TARGET_UBUNTU TARGET_UBUNTU2 sadsadsaadl kdjsadj sadjasl"
-RUN echo "$TARGET_RPI TARGET_RPI2 sadsadsaadl kdjsadj sadjasl"
+RUN echo "Current active target is $TARGET"
+RUN echo "Current active branch is $COMPILE_BRANCH"
+
 RUN mkdir -p /home/$USERNAME/scripts
 
 RUN touch /home/$USERNAME/.bashrc
@@ -218,14 +220,26 @@ RUN touch /home/$USERNAME/.bashrc
 ARG IS_PRODUCTION
 
 
-ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME/scripts/hear_configurations_install.sh
-RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
-RUN cd /home/$USERNAME/scripts && ./hear_configurations_install.sh
+# ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME/scripts/hear_configurations_install.sh
+# RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
+# RUN cd /home/$USERNAME/scripts && ./hear_configurations_install.sh
+
+# RUN if [  "$IS_PRODUCTION" = "TRUE" ]; then\
+#     #
+#     rm -r ~/HEAR_Configurations/.git; \
+#     rm  ~/HEAR_Configurations/.gitignore; \
+#     #
+#   fi;
+
+
+ADD /src/common/scripts/hear_arch/hear_Msgs_install.sh /home/$USERNAME/scripts/hear_Msgs_install.sh
+RUN chmod +x  /home/$USERNAME/scripts/hear_Msgs_install.sh
+RUN cd /home/$USERNAME/scripts && ./hear_Msgs_install.sh $TARGET /home/$USERNAME/HEAR_Msgs $COMPILE_BRANCH
 
 RUN if [  "$IS_PRODUCTION" = "TRUE" ]; then\
     #
-    rm -r ~/HEAR_Configurations/.git; \
-    rm  ~/HEAR_Configurations/.gitignore; \
+    rm -r ~/hear_Msgs/.git; \
+    rm  ~/hear_Msgs/.gitignore; \
     #
   fi;
 
@@ -233,26 +247,11 @@ RUN if [  "$IS_PRODUCTION" = "TRUE" ]; then\
 
 ADD /src/common/scripts/hear_arch/hear_fc_install.sh /home/$USERNAME/scripts/hear_fc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_fc_install.sh
-RUN if [ "$WS_NAME" = "HEAR_FC" ] && [ "$TARGET_ORIN" = "ON" ]; then\
+RUN if [ "$WS_NAME" = "HEAR_FC" ]; then\
     #
-    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "ORIN"; \
-    #
-  fi;
-
-RUN if [ "$WS_NAME" = "HEAR_FC" ] && [ "$TARGET_RPI" = "ON" ]; then\
-    #
-    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "RPI"; \
+    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME $TARGET $COMPILE_BRANCH; \
     #
   fi;
-
-
-RUN if [ "$WS_NAME" = "HEAR_FC" ] && [ "$TARGET_UBUNTU" = "ON" ]; then\
-    #
-    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "SITL"; \
-    #
-  fi;
-
-
 
 RUN if [ "$WS_NAME" = "HEAR_FC" ] && [  "$IS_PRODUCTION" = "TRUE" ]; then\
     #
@@ -275,24 +274,13 @@ RUN if [ "$WS_NAME" = "HEAR_FC" ] && [  "$IS_PRODUCTION" = "TRUE" ]; then\
 
 ADD /src/common/scripts/hear_arch/hear_mc_install.sh /home/$USERNAME/scripts/hear_mc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_mc_install.sh
-RUN if [ "$WS_NAME" = "HEAR_MC" ] && [ "$TARGET_ORIN" = "ON" ]; then\
+RUN if [ "$WS_NAME" = "HEAR_MC" ]; then\
     #
-    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "ORIN"; \
-    #
-  fi;
-
-RUN if [ "$WS_NAME" = "HEAR_MC" ] && [ "$TARGET_RPI" = "ON" ]; then\
-    #
-    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "RPI"; \
+    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME $TARGET $COMPILE_BRANCH; \
     #
   fi;
 
 
-RUN if [ "$WS_NAME" = "HEAR_MC" ] && [ "$TARGET_UBUNTU" = "ON" ]; then\
-    #
-    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME "SITL"; \
-    #
-  fi;
 
 
 RUN if [ "$WS_NAME" = "HEAR_MC" ] && [  "$IS_PRODUCTION" = "TRUE" ]; then\

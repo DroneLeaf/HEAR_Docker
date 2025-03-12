@@ -21,11 +21,13 @@ docker build \
 --secret id=GITHUB_ID,src=secrets/GITHUB_ID \
 --secret id=GITHUB_TOKEN,src=secrets/GITHUB_TOKEN \
 --build-arg TARGET_ORIN="ON" \
+--build-arg TARGET="ORIN" \
 --build-arg opencv_url="geohashim/opencv:4.0.0" \
 --build-arg qt_url="geohashim/qt" \
---build-arg USERNAME="{username}" \
+--build-arg USERNAME="hashim" \
 --build-arg WS_NAME="HEAR_FC" \
---build-arg IS_PRODUCTION="FALSE" \
+--build-arg IS_PRODUCTION="TRUE" \
+--build-arg COMPILE_BRANCH="dev-sitl" \
 -t fc_orin \
 .
 
