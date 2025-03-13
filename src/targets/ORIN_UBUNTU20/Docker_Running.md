@@ -11,7 +11,7 @@
 you can generate one as described [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
 ```bash 
 cd ~/HEAR_Docker
-
+mkdir secrets
 echo {GITHUB_ID_HERE} > secrets/GITHUB_ID
 echo {GITHUB_TOKEN_HERE} > secrets/GITHUB_TOKEN
 
