@@ -238,8 +238,8 @@ RUN cd /home/$USERNAME/scripts && ./hear_Msgs_install.sh $TARGET /home/$USERNAME
 
 RUN if [  "$IS_PRODUCTION" = "TRUE" ]; then\
     #
-    rm -r ~/hear_Msgs/.git; \
-    rm  ~/hear_Msgs/.gitignore; \
+    rm -r /home/$USERNAME/HEAR_Msgs/src/HEAR_Msgs/.git; \
+    rm  /home/$USERNAME/HEAR_Msgs/src/HEAR_Msgs/.gitignore; \
     #
   fi;
 
