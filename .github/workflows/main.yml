@@ -57,7 +57,7 @@ jobs:
       - name: Get Actor ID
         id: get_actor_id
         run: |
-             echo "::set-output name=actor_id::$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/${{ github.actor }} | jq -r .id)"
+             echo "::set-output name=actor_id::$(curl -s -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" https://api.github.com/users/${{ github.actor }} | jq -r .id)"
 
       - name: Expose GitHub Runtime
         uses: crazy-max/ghaction-github-runtime@v3
@@ -71,22 +71,27 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-pf-aws-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}
           IMAGE_TAG: latest
+          triggering_actor: ${{ github.triggering_actor }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           echo ${{ github.triggering_actor }}
           docker buildx create --name hashimBuilder --driver=docker-container
-          docker buildx build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  \
+          docker buildx build . --platform linux/arm64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  \
           --builder=hashimBuilder \
           --push \
           --cache-to type=gha,mode=max,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
           --cache-from type=gha,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
           --progress=plain \
-          --build-arg GITHUB_ID="${{ github.triggering_actor }}" \
-          --build-arg GITHUB_TOKEN="${{ secrets.PAT_TOKEN }}" \
-          --build-arg TARGET_UBUNTU="ON" \
+          --secret id=GITHUB_ID,env=triggering_actor \
+          --secret id=GITHUB_TOKEN,env=PAT_TOKEN \
+          --build-arg TARGET_ORIN="ON" \
+          --build-arg TARGET="ORIN" \
           --build-arg opencv_url="geohashim/opencv:4.0.0" \
+          --build-arg qt_url="geohashim/qt" \
           --build-arg USERNAME="hashim" \
           --build-arg WS_NAME="HEAR_FC" \
-          --build-arg qt_url="geohashim/qt"
+          --build-arg IS_PRODUCTION="TRUE" \
+          --build-arg COMPILE_BRANCH="dev-sitl" \
 
 
 
