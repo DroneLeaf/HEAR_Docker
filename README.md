@@ -1,6 +1,17 @@
 # HEAR Docker Getting Started Guide
 
 
+# ⚠️⚠️💡📌📌`HEAR_CLI`: is an alternative way to execute most of HEAR_Docker commands is launched under the name of `hear-cli`
+
+It is recommended to to use `hear-cli` instead of HEAR_Docker, however it is up to you any way 
+
+ 📌 `hear-cli` Documintations [here](hear-cli/README.md)
+
+
+---
+
+
+# HEAR Docker
 # **Good To Know**
 
 ### Expressions
@@ -46,7 +57,7 @@ docker buildx ls # you should see linux/arm64 arch
 3. ### Clone Hear_Docker Repo at home directory
 ```bash
 cd
-git clone https://github.com/ahmed-hashim-pro/HEAR_Docker.git
+git clone https://github.com/DroneLeaf/HEAR_Docker.git
 ```
 
 

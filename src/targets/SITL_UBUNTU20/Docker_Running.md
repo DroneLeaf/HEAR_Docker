@@ -12,16 +12,20 @@ you can generate one as described [here](https://docs.github.com/en/authenticati
 ```bash 
 cd ~/HEAR_Docker
 
+echo {GITHUB_ID_HERE} > secrets/GITHUB_ID
+echo {GITHUB_TOKEN_HERE} > secrets/GITHUB_TOKEN
+
 docker build \
 --platform=linux/amd64 \
 --progress=plain \
---build-arg GITHUB_ID="{ID_HERE}" \
---build-arg GITHUB_TOKEN="{TOKEN_HERE}" \
+--secret id=GITHUB_ID,src=secrets/GITHUB_ID \
+--secret id=GITHUB_TOKEN,src=secrets/GITHUB_TOKEN \
 --build-arg TARGET_UBUNTU="ON" \
 --build-arg opencv_url="geohashim/opencv:4.0.0" \
 --build-arg qt_url="geohashim/qt" \
 --build-arg USERNAME="{username}" \
 --build-arg WS_NAME="HEAR_FC" \
+--build-arg IS_PRODUCTION="FALSE" \
 -t fc_sitl \
 .
 

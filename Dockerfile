@@ -7,7 +7,7 @@ FROM geohashim/ros AS base
 LABEL org.opencontainers.image.title="crosscompiling system" 
 LABEL org.opencontainers.image.description="Create prebuilded images for specific platforms" 
 LABEL org.opencontainers.image.authors="Ahmed Hashim" 
-LABEL org.opencontainers.image.documentation="https://github.com/ahmed-hashim-pro/HEAR_Docker" 
+LABEL org.opencontainers.image.documentation="https://github.com/DroneLeaf/HEAR_Docker" 
 LABEL org.opencontainers.image.version="1.0.0" 
 ARG DEBIAN_FRONTEND=noninteractive # ignore user input required
 # Install required build dependencies
@@ -40,7 +40,7 @@ RUN mkdir -p /opt/Qt5.15
 CMD ["bash"]
 
 
-FROM base
+FROM base AS final
 ARG DEBIAN_FRONTEND=noninteractive
 RUN cd ~/
 
@@ -72,8 +72,10 @@ ARG WS_NAME
 ARG TARGET_RPI=OFF
 ARG TARGET_UBUNTU=OFF
 ARG TARGET_ORIN=OFF
-ARG GITHUB_ID
-ARG GITHUB_TOKEN
+ARG TARGET="ORIN"
+ARG COMPILE_BRANCH="dev"
+# ARG GITHUB_ID
+# ARG GITHUB_TOKEN
 
 RUN apt-get -y install keyboard-configuration
 
@@ -81,10 +83,23 @@ RUN apt-get -y install keyboard-configuration
 # setup git credentials
 RUN git config --global user.name "docker image"
 
-RUN git config \
+
+RUN --mount=type=secret,id=GITHUB_ID,target=/run/secrets/GITHUB_ID \
+    --mount=type=secret,id=GITHUB_TOKEN,target=/run/secrets/GITHUB_TOKEN \
+    GITHUB_ID_SECRET=$(cat /run/secrets/GITHUB_ID) && \
+    GITHUB_TOKEN_SECRET=$(cat /run/secrets/GITHUB_TOKEN) &&\
+    git config \
     --global \
-    url."https://${GITHUB_ID}:${GITHUB_TOKEN}@github.com/".insteadOf \
+    url."https://${GITHUB_ID_SECRET}:${GITHUB_TOKEN_SECRET}@github.com/".insteadOf \
     "https://github.com/"
+
+
+
+
+# RUN git config \
+#     --global \
+#     url."https://${GITHUB_ID}:${GITHUB_TOKEN}@github.com/".insteadOf \
+#     "https://github.com/"
 
 
 
@@ -112,7 +127,7 @@ RUN ./scripts/mavlink_install.sh
 
 
 # #### target condition execute
-RUN if [ "$TARGET_RPI" = "ON" ]; then\
+RUN if [ "$TARGET" = "RPI" ]; then\
      # run your sh file here 👇👇
      #./scripts/Qgroundcontrol_install.sh; \
      echo "TARGET_RPI Applied";\
@@ -128,7 +143,7 @@ RUN if [ "$TARGET_RPI" = "ON" ]; then\
 
 
 # #### target condition execute
-RUN if [ "$TARGET_SITL" = "ON" ]; then\
+RUN if [ "$TARGET" = "SITL" ]; then\
      # run your sh file here 👇👇
      #./scripts/Qgroundcontrol_install.sh; \
      echo "TARGET_SITL Applied";\
@@ -145,9 +160,10 @@ ADD /src/common/scripts/Qgroundcontrol_install.sh /scripts/Qgroundcontrol_instal
 RUN chmod +x scripts/Qgroundcontrol_install.sh
 
 # #### target condition execute
-RUN if [ "$TARGET_ORIN" = "ON" ]; then\
+RUN if [ "$TARGET" = "ORIN" ]; then\
      # run your sh file here 👇👇
      # ./scripts/Qgroundcontrol_install.sh; \
+    ./scripts/Kalibr.sh; \
     echo "TARGET_ORIN Applied";\
     #
   fi;
@@ -177,15 +193,15 @@ WORKDIR /home/$USERNAME/$WS_NAME
 
 #RUN mkdir -p /HEAR_FC/src
 
-# RUN cd /HEAR_FC/src  &&  git clone -b devel https://github.com/HazemElrefaei/HEAR_FC.git HEAR_FC
+# RUN cd /HEAR_FC/src  &&  git clone -b devel https://github.com/DroneLeaf/HEAR_FC.git HEAR_FC
 # RUN cd /HEAR_FC/src/HEAR_FC && git submodule update --init --recursive
 
 # ARG TARGET_RPI
 # ARG TARGET_UBUNTU
 
-RUN echo "$TARGET_ORIN TARGET_ORIN2 sadsadsaadl kdjsadj sadjasl"
-RUN echo "$TARGET_UBUNTU TARGET_UBUNTU2 sadsadsaadl kdjsadj sadjasl"
-RUN echo "$TARGET_RPI TARGET_RPI2 sadsadsaadl kdjsadj sadjasl"
+RUN echo "Current active target is $TARGET"
+RUN echo "Current active branch is $COMPILE_BRANCH"
+
 RUN mkdir -p /home/$USERNAME/scripts
 
 RUN touch /home/$USERNAME/.bashrc
@@ -201,30 +217,109 @@ RUN touch /home/$USERNAME/.bashrc
 # #  && rosdep update
 # RUN ls
 # RUN cmake --version
+ARG IS_PRODUCTION
+
+
+# ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME/scripts/hear_configurations_install.sh
+# RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
+# RUN cd /home/$USERNAME/scripts && ./hear_configurations_install.sh
+
+# RUN if [  "$IS_PRODUCTION" = "TRUE" ]; then\
+#     #
+#     rm -r ~/HEAR_Configurations/.git; \
+#     rm  ~/HEAR_Configurations/.gitignore; \
+#     #
+#   fi;
+
+
+ADD /src/common/scripts/hear_arch/hear_Msgs_install.sh /home/$USERNAME/scripts/hear_Msgs_install.sh
+RUN chmod +x  /home/$USERNAME/scripts/hear_Msgs_install.sh
+RUN cd /home/$USERNAME/scripts && ./hear_Msgs_install.sh $TARGET /home/$USERNAME/HEAR_Msgs $COMPILE_BRANCH
+
+RUN if [  "$IS_PRODUCTION" = "TRUE" ]; then\
+    #
+    rm -r /home/$USERNAME/HEAR_Msgs/src/HEAR_Msgs/.git; \
+    rm  /home/$USERNAME/HEAR_Msgs/src/HEAR_Msgs/.gitignore; \
+    #
+  fi;
+
+
 
 ADD /src/common/scripts/hear_arch/hear_fc_install.sh /home/$USERNAME/scripts/hear_fc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_fc_install.sh
 RUN if [ "$WS_NAME" = "HEAR_FC" ]; then\
     #
-    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME; \
+    cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME $TARGET $COMPILE_BRANCH; \
+    #
+  fi;
+
+RUN if [ "$WS_NAME" = "HEAR_FC" ] && [  "$IS_PRODUCTION" = "TRUE" ]; then\
+    #
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/Flight_controller/HEAR_Blocks; \
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/Flight_controller/HEAR_executables; \
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/Flight_controller/HEAR_Interfaces; \
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/Flight_controller/HEAR_Mission; \
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/Flight_controller/HEAR_Util; \
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/HEAR_flight_controller; \
+    rm  /home/$USERNAME/HEAR_FC/src/HEAR_FC/Flight_controller/Configurations.cmake; \
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/.vscode; \
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/.idea; \
+    rm -r /home/$USERNAME/HEAR_FC/src/HEAR_FC/.git; \
+    rm  /home/$USERNAME/HEAR_FC/src/HEAR_FC/.gitignore; \
+    rm  /home/$USERNAME/HEAR_FC/src/HEAR_FC/.gitmodules; \
+    rm  /home/$USERNAME/HEAR_FC/src/HEAR_FC/README.md; \
     #
   fi;
 # RUN cd /home/$USERNAME/scripts && ./hear_fc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME
-
 
 ADD /src/common/scripts/hear_arch/hear_mc_install.sh /home/$USERNAME/scripts/hear_mc_install.sh
 RUN chmod +x  /home/$USERNAME/scripts/hear_mc_install.sh
 RUN if [ "$WS_NAME" = "HEAR_MC" ]; then\
     #
-    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME; \
+    cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME $TARGET $COMPILE_BRANCH; \
     #
   fi;
+
+
+
+
+RUN if [ "$WS_NAME" = "HEAR_MC" ] && [  "$IS_PRODUCTION" = "TRUE" ]; then\
+    #
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_MC_Realization/HEAR_Blocks; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_MC_Realization/HEAR_Interfaces; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_MC_Realization/HEAR_Mission; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_MC_Realization/HEAR_Util; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_MC_Realization/example_node; \
+    rm  /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_MC_Realization/Configurations.cmake; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_Mission_Control; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_Msgs; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/HEAR_msgs; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/.git; \
+    rm  /home/$USERNAME/HEAR_MC/src/HEAR_MC/.gitignore; \
+    rm  /home/$USERNAME/HEAR_MC/src/HEAR_MC/.gitmodules; \
+    rm  /home/$USERNAME/HEAR_MC/src/HEAR_MC/Profiling.md; \
+    rm  /home/$USERNAME/HEAR_MC/src/HEAR_MC/README.md; \
+    rm  /home/$USERNAME/HEAR_MC/src/HEAR_MC/installation_of_packages.txt; \
+    rm -r /home/$USERNAME/HEAR_MC/src/HEAR_MC/.vscode; \
+    #
+  fi;
+
+
+
+## remove scripts folder in production mode
+RUN if [ "$IS_PRODUCTION" = "TRUE" ]; then\
+    #
+    rm  -rf /scripts; \
+    rm  -rf /home/$USERNAME/scripts; \
+    #
+  fi;
+
+
+
+
 # RUN cd /home/$USERNAME/scripts && ./hear_mc_install.sh $TARGET_RPI $TARGET_UBUNTU $TARGET_ORIN /home/$USERNAME/$WS_NAME $USERNAME
 
 
-ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME/scripts/hear_configurations_install.sh
-RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
-RUN cd /home/$USERNAME/scripts && ./hear_configurations_install.sh
 
 RUN bash -c "source /opt/ros/noetic/setup.bash"
 RUN bash -c "echo source /opt/ros/noetic/setup.bash >> '/root/.bashrc'"
@@ -234,9 +329,30 @@ RUN bash -c "source /home/$USERNAME/$WS_NAME/devel/setup.bash"
 RUN bash -c "echo source /home/$USERNAME/$WS_NAME/devel/setup.bash >> '/root/.bashrc'"
 RUN bash -c "source /root/.bashrc"
 
-# remove git credentials
-RUN rm -f ~/.gitconfig
-ARG GITHUB_TOKEN=""
+
+# remove git credentials in production mode
+RUN if [ "$IS_PRODUCTION" = "TRUE" ]; then\
+    #
+    rm -f ~/.gitconfig; \
+    #
+  fi;
+RUN 
+
+
+FROM base
+ARG DEBIAN_FRONTEND=noninteractive
+RUN cd ~/
+COPY --from=final / /
+ARG USERNAME
+ARG WS_NAME
+
+WORKDIR /home/$USERNAME/$WS_NAME
+
+EXPOSE 80
+EXPOSE 8080
+EXPOSE 11311
+EXPOSE 14540
+EXPOSE 14580
 
 
 ADD /src/core/docker/entrypoint.sh /

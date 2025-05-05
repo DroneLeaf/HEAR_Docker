@@ -36,14 +36,14 @@ OS: Ubuntu 20.04
 ```bash
 cd
 
-git clone https://github.com/ahmed-hashim-pro/HEAR_Docker
+git clone https://github.com/DroneLeaf/HEAR_Docker
 
 cd HEAR_Docker
 sudo chmod -R +x src/targets/SITL_UBUNTU20
 
 cd src/targets/SITL_UBUNTU20
 
-sudo ./full_system_installation.sh
+./full_system_installation.sh
 
 
 ```

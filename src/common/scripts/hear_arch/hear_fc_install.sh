@@ -18,16 +18,18 @@ source /opt/ros/noetic/setup.bash
 # create workspace
 mkdir -p $4/src
 cd $4/src
-git clone -b devel https://github.com/HazemElrefaei/HEAR_FC.git HEAR_FC
+git clone -b $7 https://github.com/DroneLeaf/HEAR_FC.git HEAR_FC
 cd HEAR_FC && git submodule update --init --recursive
+# git clone https://github.com/DroneLeaf/HEAR_Msgs.git 
 
 # return to workspace and build
 cd $4
-catkin_make clean -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2
+catkin_make clean -DHEAR_TARGET=$6 
+
 
 #RUN bash -c "cd /HEAR_FC &&cp -r /HEAR_FC/mavros_msgs /HEAR_FC/devel/include"
-catkin_make clean -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2
-catkin_make -DCMAKE_BUILD_TYPE=Debug -DTARGET_RPI=$1 -DTARGET_UBUNTU=$2 -DTARGET_ORIN=$3 -Wno-dev
+catkin_make clean -DHEAR_TARGET=$6
+catkin_make -DCMAKE_BUILD_TYPE=Debug -DHEAR_TARGET=$6 -Wno-dev
 cd
 #RUN touch /home/pi/.bashrc
 

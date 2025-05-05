@@ -10,8 +10,8 @@ sudo ()
 "$@"
 }
 
-apt-get update && apt-get install -y
-apt-get upgrade -y
+sudo apt-get update && sudo apt-get install -y
+sudo apt-get upgrade -y
 
 sudo apt-get install build-essential libgeographic-dev -y
 sudo apt-get install ros-noetic-mavlink -y
@@ -52,9 +52,10 @@ source /opt/ros/noetic/setup.bash
 cd
 sudo apt install python3-catkin-tools python3-rosinstall-generator python3-osrf-pycommon -y
 pip3 install future
-mkdir -p ~/catkin_ws/src
-cd ~/catkin_ws/src
+mkdir -p ~/catkin_ws_offboard_testing/src
+cd ~/catkin_ws_offboard_testing/src
 echo " clone offboard_testing.git"
+rm -rf offboard_testing
 git clone https://github.com/Mu99-M/offboard_testing.git --recursive
 cd ..
 sudo ./src/offboard_testing/mavros/mavros/scripts/install_geographiclib_datasets.sh  # Install GeographicLib datasets
@@ -63,5 +64,10 @@ source devel/setup.bash
 cd
 sudo apt-get install ros-noetic-mavros ros-noetic-mavros-extras
 wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
-chmod a+x install_geographiclib_datasets.sh
-./install_geographiclib_datasets.sh
+sudo chmod a+x install_geographiclib_datasets.sh
+sudo ./install_geographiclib_datasets.sh
+
+
+source ~/catkin_ws_offboard_testing/devel/setup.bash
+echo "source ~/catkin_ws_offboard_testing/devel/setup.bash" >> ~/.bashrc
+source ~/.bashrc
