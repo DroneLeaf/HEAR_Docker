@@ -14,6 +14,7 @@ ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /
 
 # source ros
 source /opt/ros/noetic/setup.bash
+source /home/$5/HEAR_Msgs/devel/setup.bash
 
 # create workspace
 mkdir -p $4/src
