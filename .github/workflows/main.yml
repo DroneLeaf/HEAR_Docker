@@ -73,7 +73,7 @@ jobs:
         run: |
           echo ${{ github.triggering_actor }}
           docker buildx create --name hashimBuilder --driver=docker-container
-          docker buildx build . --platform linux/arm64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  \
+          docker buildx build . --platform linux/arm64 -t hear_fc:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  \
           --builder=hashimBuilder \
           --push \
           --cache-to type=gha,mode=max,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
@@ -97,7 +97,7 @@ jobs:
           IMAGE_TAG: latest
         run: |
           # Create a container from the image we just built (but don't run it)
-          CONTAINER_ID=$(docker create --platform linux/arm64 $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG)
+          CONTAINER_ID=$(docker create --platform linux/arm64 hear_fc:latest)
 
           # Create a directory to hold the extracted files
           mkdir -p extracted_files
