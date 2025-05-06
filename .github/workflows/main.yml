@@ -73,7 +73,27 @@ jobs:
         run: |
           echo ${{ github.triggering_actor }}
           docker buildx create --name hashimBuilder --driver=docker-container
-          docker buildx build . --platform linux/arm64 -t hear_fc:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  \
+
+          docker buildx build . --platform linux/arm64 \
+          -t hear_fc:latest \
+          --builder=hashimBuilder \
+          --load \
+          --cache-to type=gha,mode=max,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
+          --cache-from type=gha,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
+          --progress=plain \
+          --secret id=GITHUB_ID,env=triggering_actor \
+          --secret id=GITHUB_TOKEN,env=PAT_TOKEN \
+          --build-arg TARGET_ORIN="ON" \
+          --build-arg TARGET="ORIN" \
+          --build-arg opencv_url="geohashim/opencv:4.0.0" \
+          --build-arg qt_url="geohashim/qt" \
+          --build-arg USERNAME="hashim" \
+          --build-arg WS_NAME="HEAR_FC" \
+          --build-arg IS_PRODUCTION="TRUE" \
+          --build-arg COMPILE_BRANCH="dev-sitl" 
+
+          docker buildx build . --platform linux/arm64 \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  \
           --builder=hashimBuilder \
           --push \
           --cache-to type=gha,mode=max,scope=$ECR_REGISTRY/$ECR_REPOSITORY:cache \
