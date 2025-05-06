@@ -221,7 +221,7 @@ ARG IS_PRODUCTION
 
 # to bypass cache
 ARG RANDOM_NUM
-RUN ls RANDOM_NUM
+RUN echo RANDOM_NUM
 
 # ADD /src/common/scripts/hear_arch/hear_configurations_install.sh /home/$USERNAME/scripts/hear_configurations_install.sh
 # RUN chmod +x  /home/$USERNAME/scripts/hear_configurations_install.sh
