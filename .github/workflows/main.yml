@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    runs-on: Linux_x64_8-core
+    runs-on: linux-x64
     strategy:
       fail-fast: false
     permissions:
