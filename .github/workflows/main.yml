@@ -97,7 +97,7 @@ jobs:
           IMAGE_TAG: latest
         run: |
           # Create a container from the image we just built (but don't run it)
-          CONTAINER_ID=$(docker create $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG)
+          CONTAINER_ID=$(docker create --platform linux/arm64 $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG)
 
           # Create a directory to hold the extracted files
           mkdir -p extracted_files
