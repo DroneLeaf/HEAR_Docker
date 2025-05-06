@@ -7,14 +7,12 @@ on:
 
 env:
   applicationfolder: src
-  AWS_REGION: me-south-1
-  S3BUCKET: ##s3-bucket## 
 
 
 jobs:
   build:
     name: Build and Package
-    runs-on: ubuntu-latest
+    runs-on: Linux_x64
     strategy:
       fail-fast: false
     permissions:
@@ -91,7 +89,32 @@ jobs:
           --build-arg USERNAME="hashim" \
           --build-arg WS_NAME="HEAR_FC" \
           --build-arg IS_PRODUCTION="TRUE" \
-          --build-arg COMPILE_BRANCH="dev-sitl" \
+          --build-arg COMPILE_BRANCH="dev-sitl" 
+
+      - name: Extract folder from Docker container
+        env:
+          ECR_REGISTRY: ${{ steps.login-pf-aws-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}
+          IMAGE_TAG: latest
+        run: |
+          # Create a container from the image we just built (but don't run it)
+          CONTAINER_ID=$(docker create $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG)
+
+          # Create a directory to hold the extracted files
+          mkdir -p extracted_files
+
+          # Copy the folder from the container to the host
+          # Replace /home/hashim/HEAR_FC/devel/lib with the actual path inside the container
+          docker cp $CONTAINER_ID:/home/hashim/HEAR_FC/devel/lib ./extracted_files
+
+          # Remove the container
+          docker rm $CONTAINER_ID
+
+      - name: Upload folder as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: extracted-container-files
+          path: extracted_files
 
 
 
@@ -104,21 +127,21 @@ jobs:
       #   working-directory: ${{ env.applicationfolder }}/target
       #   run: aws s3 cp *.war s3://${{ env.S3BUCKET }}/
         
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: Dev
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-    - uses: actions/checkout@v2
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
-        role-session-name: GitHub-Action-Role
-        aws-region: ${{ env.AWS_REGION }}
-    - run: |
-        echo "Deploying branch ${{ env.GITHUB_REF }} to ${{ github.event.inputs.environment }}"
-        commit_hash=`git rev-parse HEAD`
-        aws deploy create-deployment --application-name HearArchCodeDeploy --deployment-group-name HearArchCodeDeployGroupName --github-location repository=$GITHUB_REPOSITORY,commitId=$commit_hash --ignore-application-stop-failures
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   environment: Dev
+  #   permissions:
+  #     id-token: write
+  #     contents: read
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
+  #       role-session-name: GitHub-Action-Role
+  #       aws-region: ${{ env.AWS_REGION }}
+  #   - run: |
+  #       echo "Deploying branch ${{ env.GITHUB_REF }} to ${{ github.event.inputs.environment }}"
+  #       commit_hash=`git rev-parse HEAD`
+  #       aws deploy create-deployment --application-name HearArchCodeDeploy --deployment-group-name HearArchCodeDeployGroupName --github-location repository=$GITHUB_REPOSITORY,commitId=$commit_hash --ignore-application-stop-failures
