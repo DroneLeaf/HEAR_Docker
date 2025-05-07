@@ -30,7 +30,7 @@ catkin_make clean -DHEAR_TARGET=$6
 
 #RUN bash -c "cd /HEAR_FC &&cp -r /HEAR_FC/mavros_msgs /HEAR_FC/devel/include"
 catkin_make clean -DHEAR_TARGET=$6
-catkin_make -DCMAKE_BUILD_TYPE=Debug -DHEAR_TARGET=$6 -Wno-dev
+catkin_make -DCMAKE_BUILD_TYPE=Debug -DHEAR_TARGET=$6 -Wno-dev -j60
 cd
 #RUN touch /home/pi/.bashrc
 
