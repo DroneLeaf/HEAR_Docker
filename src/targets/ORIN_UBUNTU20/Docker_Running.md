@@ -93,7 +93,7 @@ python3 src/core/utils/s3Upload.py \
 
 ```bash
 
-aws configure set aws_access_key_id "AKIAUJ6SOV74EPNOMEGF" --profile s3download && aws configure set aws_secret_access_key "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" --profile s3download && aws configure set region "me-south-1" --profile s3download
+aws configure set ***HA-REMOVED-BY-HASHIM*** --profile s3download && aws configure set ***HA-REMOVED-BY-HASHIM*** --profile s3download && aws configure set region "me-south-1" --profile s3download
 
 
 aws s3api get-object --bucket hear-bucket --key hear_arch/hear_fc_devel.zip hear_fc_devel.zip --profile s3download
@@ -138,7 +138,7 @@ cp -r  compiled_files/compiled_files ~/HEAR_FC
 ```bash
 sudo apt  install awscli -y
 
-aws configure set aws_access_key_id "AKIAUJ6SOV74AAMHJYHS" --profile ecrpush && aws configure set aws_secret_access_key "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" --profile ecrpush && aws configure set region "me-south-1" --profile ecrpush
+aws configure set ***HA-REMOVED-BY-HASHIM*** --profile ecrpush && aws configure set ***HA-REMOVED-BY-HASHIM*** --profile ecrpush && aws configure set region "me-south-1" --profile ecrpush
 
 aws ecr get-login-password --region me-south-1 --profile ecrpush | docker login --username AWS --password-stdin 296257236984.dkr.ecr.me-south-1.amazonaws.com
 
@@ -154,7 +154,7 @@ docker tag  296257236984.dkr.ecr.me-south-1.amazonaws.com/hear_fc_orin:latest fc
 ```bash
 sudo apt  install awscli -y
 
-aws configure set aws_access_key_id "AKIAUJ6SOV74BIPDJCHB" --profile ecrpull && aws configure set aws_secret_access_key "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" --profile ecrpull && aws configure set region "me-south-1" --profile ecrpull
+aws configure set ***HA-REMOVED-BY-HASHIM*** --profile ecrpull && aws configure set ***HA-REMOVED-BY-HASHIM*** --profile ecrpull && aws configure set region "me-south-1" --profile ecrpull
 
 aws ecr get-login-password --region me-south-1 --profile ecrpull | docker login --username AWS --password-stdin 296257236984.dkr.ecr.me-south-1.amazonaws.com
 

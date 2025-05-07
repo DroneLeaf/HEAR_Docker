@@ -15,8 +15,8 @@ from progressbar import ProgressBar, Percentage, \
 
 AWS_S3_BUCKET_NAME = 'hear-bucket'
 AWS_REGION = 'me-south-1'
-AWS_ACCESS_KEY = 'AKIAUJ6SOV74EPNOMEGF'
-AWS_SECRET_KEY = '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'
+***HA-REMOVED-BY-HASHIM***
+***HA-REMOVED-BY-HASHIM***
 
 LOCAL_FILE = "hear_fc_devel.zip"
 NAME_FOR_S3 = 'hear_arch/'+sys.argv[1]
