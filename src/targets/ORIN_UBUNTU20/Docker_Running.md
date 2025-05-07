@@ -14,6 +14,7 @@ cd ~/HEAR_Docker
 mkdir secrets
 echo {GITHUB_ID_HERE} > secrets/GITHUB_ID
 echo {GITHUB_TOKEN_HERE} > secrets/GITHUB_TOKEN
+export BUILD_TIMESTAMP=$(date +%s) 
 
 docker build \
 --platform=linux/arm64 \
@@ -28,6 +29,7 @@ docker build \
 --build-arg WS_NAME="HEAR_FC" \
 --build-arg IS_PRODUCTION="TRUE" \
 --build-arg COMPILE_BRANCH="dev-sitl" \
+--build-arg RANDOM_NUM="$BUILD_TIMESTAMP" \
 -t fc_orin \
 .
 
