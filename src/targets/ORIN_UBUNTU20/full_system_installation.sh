@@ -39,6 +39,7 @@ chmod +x ../../../src/common/scripts/px4/mavlink_install.sh
 chmod +x ../../../src/common/scripts/Qgroundcontrol_install.sh
 chmod +x ../../../src/common/scripts/netplan-init-eth-netcfg.sh
 chmod +x ../../../src/common/scripts/droneleaf_cli_prerequisites.sh
+chmod +x ../../../src/common/scripts/redis_installer.sh
 
 
 sudo ../../../src/common/scripts/extend_sudo_timeout.sh
@@ -82,3 +83,6 @@ send_status "netplan-init-eth-netcfg Success" $1
 
 ../../../src/common/scripts/droneleaf_cli_prerequisites.sh
 send_status "droneleaf_cli_prerequisites Success" $1
+
+../../../src/common/scripts/redis_installer.sh
+send_status "redis_installer Success" $1
