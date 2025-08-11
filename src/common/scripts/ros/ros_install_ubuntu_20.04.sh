@@ -12,10 +12,6 @@ sudo ()
 
 ln -snf /usr/share/zoneinfo/Africa/Cairo /etc/localtime && echo Africa/Cairo > /etc/timezone
 
-# Below two commands are used to fix the issue of missing keys for ROS repository
-sudo apt-key del 421C365BD9FF1F717815A3895523BAEEB01FA116
-sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
-
 sudo apt-get update && sudo  apt-get install -y gnupg
 sudo apt-get upgrade -y
 
